@@ -1,12 +1,45 @@
 <!DOCTYPE HTML>
-<html>
+<html ng-app class="no-js" lang="en">
     <head>
         <% include partials/header.ejs %>
     </head>
     
     <body>
-        <h1>Hello!</h1>
-        <p>This is a test</p>
+        <% include partials/nav.ejs %>
+        
+        <div class="row">
+            <div class="large-12 columns">
+                <h1>Welcome to H-Stone</h1>
+            </div>
+        </div>
+        
+        <div class="row">
+            <label>Name:</label>
+            <input type="text" ng-model="yourName" placeholder="Enter a name here">
+            <hr>
+            <h1>Hello {{yourName}}!</h1>
+        </div>
+
+    <div class="row">
+      <div class="large-12 columns">
+        <div class="callout">
+          <h3>We&rsquo;re stoked you want to try Foundation! </h3>
+          <p>To get going, this file (index.html) includes some basic styles you can modify, play around with, or totally destroy to get going.</p>
+          <p>Once you've exhausted the fun in this document, you should check out:</p>
+          <div class="row">
+            <div class="large-4 medium-4 columns">
+              <p><a href="http://foundation.zurb.com/docs">Foundation Documentation</a><br />Everything you need to know about using the framework.</p>
+            </div>
+            <div class="large-4 medium-4 columns">
+              <p><a href="http://zurb.com/university/code-skills">Foundation Code Skills</a><br />These online courses offer you a chance to better understand how Foundation works and how you can master it to create awesome projects.</p>
+            </div>
+            <div class="large-4 medium-4 columns">
+              <p><a href="http://foundation.zurb.com/forum">Foundation Forum</a><br />Join the Foundation community to ask a question or show off your knowlege.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
     
     </body>
 </html>

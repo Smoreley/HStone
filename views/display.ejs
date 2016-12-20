@@ -1,59 +1,22 @@
 <!DOCTYPE HTML>
-<html>
+<html class="no-js" lang="en">
     <head>
         <% include partials/header.ejs %>
     </head>
 
     <body>
-        <h1>Display!</h1>
+        <% include partials/nav.ejs %>
         
-        <div>
-            <h4>Basic</h4>
-            <% info.Basic.forEach(function(item) { %>
-                <div>
-                    <%= item.name %>
-                </div>
-            <% }); %>
+        <div class="row">
+            <div class="large-12 columns">
+                <h1>Card Show Page</h1>
+            </div>
         </div>
         
-        <div>
-            <h4>Classic</h4>
-            <% info.Classic.forEach(function(item) { %>
-                <div>
-                    <%= item.name %>
-                </div>
-            <% }); %>
-        </div>
+        <%- include("partials/card.ejs",{cardSet:"Basic"}) %>
         
-        <div>
-            <h4>Promo</h4>
-            <% info.Promo.forEach(function(item) { %>
-                <div class="infoSet">
-                    <%= item.name %>
-                    <img src=<%= item.img %> >
-                    
-                    <ul>
-                        <li>Type:<%= item.type %></li>
-                        <li>Player Class:<%= item.playerClass %></li>
-                        <li>Race:<%= item.race %></li>
-                        <li>Cost:<%= item.cost %></li>
-                        <li>Health:<%= item.health %></li>
-                        <li>Attack:<%= item.attack %></li>
-                    </ul>
-                </div>
-            <% }); %>
-        </div>   
-            
-        
-        <div>
-            <h4>Reward</h4>
-            <% info.Reward.forEach(function(item) { %>
-                <div>
-                    <%= item.name %>
-                    
-                </div>
-            <% }); %>
-        </div>   
+<!--        <%- include("partials/card.ejs",{cardSet:"Classic"}) %>-->
+<!--        <%- include("partials/card.ejs",{cardSet:"Naxxramas"}) %>-->
         
 <!--        <%= JSON.stringify(info) %>-->
         
