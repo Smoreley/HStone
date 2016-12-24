@@ -22,3 +22,17 @@ Hearthstone web-app for the community
 * Missions
 * Credits
 * Debug
+
+
+
+
+## Layout
+
+# Main Page
+* Search for cards (name, class, type, cost)
+* 
+
+
+# Pages
+* Main Page
+* Deck Builder

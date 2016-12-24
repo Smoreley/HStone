@@ -1,0 +1,56 @@
+<!DOCTYPE HTML>
+<html class="no-js">
+    <head>
+        <% include partials/header.ejs %>
+    </head>
+
+    <body>
+        <% include partials/nav.ejs %>
+        
+        <div class="row">
+            <div class="large-12 columns">
+                <h1>Card Single Show Page</h1>
+            </div>
+        </div>
+        
+        <div class="row">
+        <% info.forEach(function(item) { %>
+        
+            <% if(item.img && item.rarity) { %> 
+            <div class="infoSet callout">
+                <div class="row">
+                    <div class="large-12 medium-12 columns">
+                        <h2><%= item.name %></h2>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="large-6 medium-6 columns">
+                        <img src=<%= item.img %> >
+                    </div>
+
+                    <div class="large-6 medium-6 columns">
+                        <ul>
+                            <li>Name:           <%= item.name %></li>
+                            <li>Type:           <%= item.type %></li>
+                            <li>Player Class:   <%= item.playerClass %></li>
+                            <li>Race:           <%= item.race %></li>
+                            <li>Cost:           <%= item.cost %></li>
+                            <li>Health:         <%= item.health %></li>
+                            <li>Attack:         <%= item.attack %></li>
+                            <li>Flavor:         <%= item.flavor %></li>
+                            <li>Card Set:       <%= item.cardSet %></li>
+                            <li>How To Get Gold:<%= item.howToGetGold %></li>
+                            <li>Rarity:         <%= item.rarity %></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <% } %>
+        
+        <% }); %>
+        </div>
+        
+<!--        <%= JSON.stringify(info) %>-->
+        
+    </body>
+</html>

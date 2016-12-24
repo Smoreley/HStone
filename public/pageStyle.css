@@ -1,10 +1,14 @@
 
 * {
-    color: #f1f1f1;
+/*    color: #f1f1f1;*/
 }
 
 body {
     background: #212121;
+}
+
+p {
+    color: #f1f1f1;
 }
 
 h1 {
@@ -12,5 +16,21 @@ h1 {
 }
 
 .infoSet{
+    background-color: #424242;
+}
+
+.menu-text {
+    color: #212121;
+}
+
+label {
+    color: #f1f1f1;
+}
+
+.top-bar {
+    background-color: #424242;
+}
+
+.menu > li{
     background-color: #424242;
 }
