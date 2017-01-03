@@ -78,4 +78,32 @@ module.exports = function(app) {
     app.get('/404', function(req,res) {
         res.render('404',{title:"404"});
     });
+    
+    app.post('/findcard', function(rew,res) {
+        console.log("WE FOUND THE CARD!");
+//        res.send("SuperData");
+        
+        var Request = unirest.get("https://omgvamp-hearthstone-v1.p.mashape.com/cards")
+        .headers({
+            'Accept': 'application/json',
+            "X-Mashape-Key": mashapeKey
+        })
+        .query({
+            "count": 1,
+            "playerClass": "Priest",
+            "cost": 2,
+            "fields": "cardId"
+        }).end(function(response, error) {
+            var data = response.body;
+
+            if(!error && response.statusCode == 200) {
+                res.send(data);
+//                res.render('display',{title:"Finding", info:data});
+            } else {
+                console.log(data);
+                console.log("\nERROR!");
+            }
+
+        });
+    });
 }
