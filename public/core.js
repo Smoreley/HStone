@@ -6,8 +6,8 @@ var hstone = angular.module('hstone', [])
     $scope.formData = {};
     
     $http.get('/').then(
-    function onSuccess(resp){
-        $scope.myData = resp.data
+    function onSuccess(res){
+        $scope.myData = res.data
         
         
         $scope.helloTo = {};
@@ -15,40 +15,46 @@ var hstone = angular.module('hstone', [])
         
         console.log("WE did it");
     },
-    function onError(resp) {
-       console.log('Error: ' + resp.data);
+    function onError(res) {
+       console.log('Error: ' + res.data);
     });
     
-    $scope.createTodo = function(data) {
+    $scope.findCard = function() {
         $scope.page = {};
         $scope.page.title = $scope.formData.text;
         
         // Sending post request to find card
-        $http.post('/findcard').then(
-        function onSuccess(resp) {
-            console.log("we have gotten the data");
-//            console.log(resp.data);
+        $http.post('/findcard', $scope.formData).then(
+        function onSuccess(res) {
+//            console.log(res.data);
+//            console.log(JSON.stringify(res.data) );
+//            $scope.helloTo.title = res.data;
             
-            console.log(JSON.stringify(resp.data) );
-//            $scope.helloTo.title = resp.data;
-            $scope.page.cardData = resp.data.Basic[0];
-            $scope.page.image = resp.data.Basic[0].img;
+            var index = 0;
+            console.log(res.data.length);
+            while(index < res.data.length) {
+                if(res.data[index].img != undefined) {               
+                    $scope.page.cardName = res.data[index].name;
+                    $scope.page.cardType = res.data[index].type;
+                    $scope.page.cardClass = res.data[index].playerClass;
+                    
+                    $scope.page.cardRace = res.data[index].race;
+                    $scope.page.cardCost = res.data[index].cost;
+                    $scope.page.cardHealth = res.data[index].health;
+                    
+                    $scope.page.cardAttack = res.data[index].attack;
+                    $scope.page.cardFlavor = res.data[index].flavor;
+                    $scope.page.cardSet = res.data[index].cardSet;
+                    
+                    $scope.page.image = res.data[index].img;
+                    break;
+                }
+                index+= 1;
+            }
         },
-        function onError(resp) {
+        function onError(res) {
             console.log("Unable to get the data ERROR!");
         })
     };
-    
-//    $scope.createTodo = function() {
-//		$http.post('/api/todos', $scope.formData)
-//			.success(function(data) {
-//				$scope.formData = {}; // clear the form so our user is ready to enter another
-//				$scope.todos = data;
-//				console.log("Doing the dead");
-//			})
-//			.error(function(data) {
-//				console.log('Error: ' + data);
-//			});
-//	};
     
 }]);

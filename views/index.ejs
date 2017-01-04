@@ -9,41 +9,59 @@
                 
         <div class="row">
             <div class="large-12 columns">
-                <p>{{page.title}}</p>
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="large-6 medium-6 columns">
-                <img src={{page.image}} >
-            </div>
-            <div class="large-6 medium-6 columns">
-                <p>{{page.cardData}}</p>
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="large-12 columns">
                 <h1>Welcome to H-Stone</h1>
             </div>
         </div>
-            
+        
+        
         <div class="container">
         <div id="todo-form" class="row">
             <div class="col-sm-8 col-sm-offset-2 text-center">
                 <form>
                     <div class="form-group">
-
                         <!-- BIND THIS VALUE TO formData.text IN ANGULAR -->
-                        <input type="text" class="form-control input-lg text-center" placeholder="I want to buy a puppy that will love me forever" ng-model="formData.text">
+                        <input type="text" class="form-control input-lg text-center" placeholder="Card name to search for" ng-model="formData.text">
                     </div>
 
                     <!-- createToDo() WILL CREATE NEW TODOS -->
-                    <button type="submit" class="btn btn-primary btn-lg" ng-click="createTodo()">Add</button>
+                    <button type="submit" class="btn btn-primary btn-lg" ng-click="findCard()">Add</button>
                 </form>
             </div>
         </div>
     </div>
+        
+        <div class="row">
+            <div class="large-12 columns">
+                <p>{{page.title}}</p>
+            </div>
+        </div>
+        
+        <div class="infoSet callout">
+            <div class="row">
+                <div class="large-6 medium-6 columns">
+                    <img src={{page.image}} >
+                </div>
+
+                <div class="large-6 medium-6 columns">
+                    <ul>
+                        <li>Name:           {{page.cardName}}</li>
+                        <li>Type:           {{page.cardType}}</li>
+                        <li>Player Class:   {{page.cardClass}}</li>
+                        
+                        <li>Race:           {{page.cardRace}}</li>
+                        <li>Cost:           {{page.cardCost}}</li>
+                        <li>Health:         {{page.cardHealth}}</li>
+                        
+                        <li>Attack:         {{page.cardAttack}}</li>
+                        <li>Flavor:         {{page.cardFlavor}}</li>
+                        <li>Set:         {{page.cardSet}}</li>
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+            
             
 <!--
         <div class="row">

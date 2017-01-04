@@ -34,3 +34,7 @@ label {
 .menu > li{
     background-color: #424242;
 }
+
+ul {
+    color: white;
+}
