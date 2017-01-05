@@ -3,10 +3,12 @@ module.exports = function(app) {
     var unirest = require('unirest');
     var mashapeKey = "tcTs13oTOtmshMiAuFHDilAXavp8p1Xgct2jsntz9DaRNlK8x0";
     
+    // Root page/Homepage
     app.get('/', function(req,res) {
         res.render('index', {title:"Homepage"});
     });
     
+    // About Page
     app.get('/about', function(req,res) {
         res.render('about',{title:"About"});
     });
@@ -33,52 +35,14 @@ module.exports = function(app) {
             }
 
         });
-
-    //    unirest.get("https://omgvamp-hearthstone-v1.p.mashape.com/{method}")
-    //    .routeParam("method", "cards")
-    //    .queryString("attack", "1")
-    //    .asJson();
-    //    .header("X-Mashape-Key", "tcTs13oTOtmshMiAuFHDilAXavp8p1Xgct2jsntz9DaRNlK8x0")
-    //    .end(function (result) {
-    //        console.log(result.status, result.headers, result.body);
-    //        res.send(result.body);
-    //    });
-
-    //    unirest.get("https://omgvamp-hearthstone-v1.p.mashape.com/cards?attack=1")
-    //    .header("X-Mashape-Key", "tcTs13oTOtmshMiAuFHDilAXavp8p1Xgct2jsntz9DaRNlK8x0")
-    //    .end(function (result) {
-    //      console.log(result.status, result.headers, result.body);
-    ////        res.send(result.body);
-    //        res.render('display',{title:"404", info:result.body});
-    //    });
-    });
-
-    app.get("/findByClass", function(req, res) {
-        
-        var searchParm = "fire";
-        
-        var Request = unirest.get("https://omgvamp-hearthstone-v1.p.mashape.com/cards/search/"+searchParm)
-        .headers({
-            'Accept': 'application/json',
-            "X-Mashape-Key": "tcTs13oTOtmshMiAuFHDilAXavp8p1Xgct2jsntz9DaRNlK8x0"
-        })
-        .end(function(response, error) {
-            var data = response.body;
-
-            if(!error && response.statusCode == 200) {
-                res.render('showcard',{title:"Finding", info:data});
-            } else {
-                console.log(data);
-                console.log("\nERROR!");
-            }
-
-        });
     });
     
+    // Unfound Page
     app.get('/404', function(req,res) {
         res.render('404',{title:"404"});
     });
     
+    // Saerch for card by partial name
     app.post('/findcard', function(req,res) {
 //        res.send("SuperData");
         
@@ -92,10 +56,25 @@ module.exports = function(app) {
             if(!error && response.statusCode == 200) {
                 res.send(data);
             } else {
-                console.log(data);
                 console.log("\nERROR!");
+                console.log(data);
+                res.send({});
             }
 
         });
+    });
+    
+    // Search for card by set
+    app.post('/findcardbyset', function(req,res) {
+        
+        var Request = unirest.get("https://omgvamp-hearthstone-v1.p.mashape.com/cards/sets/{set}")
+        .headers({
+            'Accept': 'application/json',
+            'X-Mashape-Key': mashapeKey
+        })
+        .end(function(response, error) {
+            
+        });
+        
     });
 }

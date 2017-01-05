@@ -1,7 +1,10 @@
+$(document).ready(function () {
+    $(document).foundation();
+});
+
 
 // Setup hstone module
 var hstone = angular.module('hstone', [])
-
 .controller('mainController', ['$scope', '$http', function ($scope, $http) {
     $scope.formData = {};
     
@@ -29,11 +32,14 @@ var hstone = angular.module('hstone', [])
 //            console.log(res.data);
 //            console.log(JSON.stringify(res.data) );
 //            $scope.helloTo.title = res.data;
+            console.log("cardLenght "+res.data.length);
+            if(res.data.length == undefined) {
+                console.log("no Cards");
+            }
             
             var index = 0;
-            console.log(res.data.length);
             while(index < res.data.length) {
-                if(res.data[index].img != undefined) {               
+                if(res.data[index].img != undefined && res.data[index].flavor != undefined) {               
                     $scope.page.cardName = res.data[index].name;
                     $scope.page.cardType = res.data[index].type;
                     $scope.page.cardClass = res.data[index].playerClass;
