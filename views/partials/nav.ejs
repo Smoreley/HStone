@@ -1,7 +1,6 @@
-<!--
 <div class="top-bar">
     <div class="top-bar-left">
-        <ul class="dropdown menu" data-dropdown-menu>
+        <ul class="menu" data-dropdown-menu>
             <li class="menu-text">H-Stone</li>
             <li><a href="/">Home</a></li>
             <li><a href="/find">Find</a></li>
@@ -19,8 +18,8 @@
         </form>
     </div>
 </div>
--->
 
+<!--
 <div class="title-bar" data-responsive-toggle="menu" data-hide-for="large">
     <div class="mobile-nav">
         <button class="menu-icon" data-toggle=""></button>
@@ -51,39 +50,95 @@
         </div>
     </div>
 </div>
+-->
 
-<!--
 <div class="top-bar accordion" data-accordion data-allow-all-closed="true">
-    <div class="top-bar-left">
-        <ul class="dropdown menu" data-dropdown-menu>
-            <li class="menu-text">H-Stone</li>
-            <li><a href="/">Home</a></li>
-            <li><a href="/find">Find</a></li>
-            <li><a href="/about">About</a></li>
-        </ul>
-    </div>
-    
-    <div class="top-bar-right">
-        <form>
-            <ul class="menu">
-                <li><input type="text" class="form-control input-lg text-center" placeholder="Search" ng-model="formData.text"></li>
-                <li><button type="submit" class="button" ng-click="findCard()">Search</button></li>
-                
-            </ul>
-        </form>
-    </div>
     
     <div class="accordion-item is-active" data-accordion-item>
-        <a href="#" class="accordion-title">Accordion 1</a>
+        <a href="#" class="accordion-title">Search Accordion</a>
         
         <div class="accordion-content" data-tab-content>
-        I would start in the open state, due to using the `is-active` state class.
+        
+        <form>
+            <div class="row">
+                <div class="large-12 columns">
+                    <div class="row collapse">
+
+                        <div class="small-6 columns">
+                            <label>Card Name</label>
+                            <input class="input-group-field" type="text" placeholder="Card Name">
+                        </div>
+
+                        <div class="small-6 columns">
+                            <label>Card Set</label>
+                                <select>
+                                    <option value="Basic">Basic</option>
+                                    <option value="Classic">Classic</option>
+                                    <option value="Naxxramas">Naxxramas</option>
+                                </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="medium-3 columns">
+                    <label>Player Class
+                        <select>
+                            <option value="Neutral">Neutral</option>
+                            <option value="Druid">Druid</option>
+                            <option value="Hunter">Hunter</option>
+                            <option value="Mage">Mage</option>
+                            <option value="Paladin">Paladin</option>
+                            <option value="Priest">Priest</option>
+                            <option value="Rogue">Rogue</option>                        
+                            <option value="Shaman">Shaman</option>
+                            <option value="Warlock">Warlock</option>
+                            <option value="Warrior">Warrior</option>
+                        </select>
+                    </label>
+                </div>
+                <div class="medium-2 columns">
+                    <label>Attack
+                        <select>
+                            <% for(var i=0; i < 10; i++) { %>
+                                <option value=<%= i %>><%= i %></option>    
+                            <% } %>
+                        </select>
+                    </label>
+                </div>
+                <div class="medium-2 columns">
+                    <label>Health
+                        <select>
+                            <% for(var i=0; i < 10; i++) { %>
+                                <option value=<%= i %>><%= i %></option>    
+                            <% } %>
+                        </select>
+                    </label>
+                </div>            
+                <div class="medium-2 columns">
+                    <label>Cost
+                        <select>
+                            <% for(var i=0; i < 10; i++) { %>
+                                <option value=<%= i %>><%= i %></option>    
+                            <% } %>
+                        </select>
+                    </label>
+                </div>
+            </div>
+
+            <div class="row">
+                <p><a type="submit" class="button expanded">Search</a></p>
+            </div>
+        </form>
+            
         </div>
     </div>
     
 </div>
 
 
+<!--
 <ul class="vertical menu" data-accordion-menu>
   <li>
     <a href="#">This is item one!</a>

@@ -39,7 +39,7 @@ var hstone = angular.module('hstone', [])
             
             var index = 0;
             while(index < res.data.length) {
-                if(res.data[index].img != undefined && res.data[index].flavor != undefined) {               
+                if(res.data[index].img && res.data[index].flavor) {               
                     $scope.page.cardName = res.data[index].name;
                     $scope.page.cardType = res.data[index].type;
                     $scope.page.cardClass = res.data[index].playerClass;
