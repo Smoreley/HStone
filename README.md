@@ -2,13 +2,19 @@
 
 Hearthstone web-app for the community
 
-## Layout
+# Layout
 
-# Main Page
+## Main Page
 * Search for cards (name, class, type, cost)
 * Build Deck
 
-# Search Type
+## Pages
+* Main Page
+* Deck Builder
+
+---
+
+## Search Type
 * Name
 * Class
 * Set
@@ -32,18 +38,12 @@ Hearthstone web-app for the community
 * Credits
 * Debug
 
-
-# Pages
-* Main Page
-* Deck Builder
-
-
-# Card Types
+## Card Types
 * Minion
 * Spell
 * Weapon
 
-# Player Class
+## Player Class
 * Druid
 * Hunter
 * Mage
