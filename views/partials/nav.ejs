@@ -1,56 +1,23 @@
 <div class="top-bar">
     <div class="top-bar-left">
-        <ul class="menu" data-dropdown-menu>
+        <ul class="menu">
             <li class="menu-text">H-Stone</li>
+<!--
             <li><a href="/">Home</a></li>
             <li><a href="/find">Find</a></li>
             <li><a href="/about">About</a></li>
+-->
         </ul>
     </div>
-    
     <div class="top-bar-right">
-        <form>
-            <ul class="menu">
-              <li><input type="text" class="form-control input-lg text-center" placeholder="Search" ng-model="formData.text"></li>
-              <li><button type="submit" class="button" ng-click="findCard()">Search</button></li>
-                <li><i class="foundicon-[speaker]"></i></li>
-            </ul>
-        </form>
+        <ul class="menu">
+            <li><button type="button" class="button" ng-click="searchCard()">Searching</button></li>
+            <li><button type="button" class="button" ng-click="deckBuild()">Deck Build</button></li>
+            <li><button id="modalLauncher" class="button">Testing modal</button></li>
+        </ul>
     </div>
 </div>
 
-<!--
-<div class="title-bar" data-responsive-toggle="menu" data-hide-for="large">
-    <div class="mobile-nav">
-        <button class="menu-icon" data-toggle=""></button>
-    </div>
-</div>
-
-<div data-sticky-container>
-    <div class="small-12 sticky" data-sticky data-options="marginTop: 0">
-        <div class="top-bar" id="menu">
-
-          <div class="top-bar-left">
-          <ul class="vertical menu large-horizontal dropdown" data-dropdown-menu data-responsive-menu="accordion large-dropdown">
-            <li class="menu-text">H-Stone</li>
-            <li><a href="/">Home</a></li>
-            <li><a href="/about">About</a></li>
-          </ul>
-          </div>
-
-          <div class="top-bar-right">
-            <form>
-                <ul class="menu">
-                    <li><input type="text" class="form-control input-lg text-center" placeholder="Search" ng-model="formData.text"></li>
-                    <li><button type="submit" class="button" ng-click="findCard()">Search</button></li>
-                    <li><i class="foundicon-[speaker]"></i></li>
-                </ul>
-            </form>
-          </div>
-        </div>
-    </div>
-</div>
--->
 
 <div class="top-bar accordion" data-accordion data-allow-all-closed="true">
     
@@ -61,23 +28,19 @@
         
         <form>
             <div class="row">
-                <div class="large-12 columns">
-                    <div class="row collapse">
 
-                        <div class="small-6 columns">
-                            <label>Card Name</label>
-                            <input class="input-group-field" type="text" placeholder="Card Name">
-                        </div>
+                <div class="small-6 columns">
+                    <label>Card Name</label>
+                    <input type="text" class="form-control input-lg text-center" placeholder="Search" ng-model="formData.text">
+                </div>
 
-                        <div class="small-6 columns">
-                            <label>Card Set</label>
-                                <select>
-                                    <option value="Basic">Basic</option>
-                                    <option value="Classic">Classic</option>
-                                    <option value="Naxxramas">Naxxramas</option>
-                                </select>
-                        </div>
-                    </div>
+                <div class="small-6 columns">
+                    <label>Card Set</label>
+                        <select ng-model="formData.cardClass">
+                            <option value="Basic">Basic</option>
+                            <option value="Classic">Classic</option>
+                            <option value="Naxxramas">Naxxramas</option>
+                        </select>
                 </div>
             </div>
 
@@ -128,27 +91,49 @@
             </div>
 
             <div class="row">
-                <p><a type="submit" class="button expanded">Search</a></p>
+                <div class="medium-12 columns">
+                    <button type="submit" class="button expanded" ng-click="findCard()">Search</button>
+                </div>
             </div>
         </form>
             
         </div>
     </div>
-    
+</div>
+
+<!-- MODAL WINDOW -->
+<div class="reveal" id="myModal" data-reveal>
+    <h2>Select Search Type</h2>
+
+    <div class="expanded button-group">
+        <a class="button">Name</a>
+        <a class="button">Class</a>
+        <a class="button">Type</a>
+        <a class="button">Set</a>
+    </div>
+
+    <button class="close-button" data-close aria-label="Close modal" type="button">
+    <span aria-hidden="true">&times;</span>
+    </button>
 </div>
 
 
 <!--
-<ul class="vertical menu" data-accordion-menu>
-  <li>
-    <a href="#">This is item one!</a>
-      <div class="top-bar">
-      </div>
-      
-    <ul class="menu vertical nested">
-      <li><a href="#">Item 1A</a></li>
-      <li><a href="#">Item 1B</a></li>
-    </ul>
-  </li>
-</ul>
+        <form>
+            <ul class="menu">
+                <li><input type="text" class="form-control input-lg text-center" placeholder="Search" ng-model="formData.text"></li>
+                <li>
+                    <label>
+                        <select ng-model="formData.searchType" >Search Method
+                            <option value="Name">Name</option>
+                            <option value="Class">Class</option>
+                            <option value="Type">Type</option>
+                            <option value="Set">Set</option>
+                        </select>
+                    </label>
+                </li>
+                
+              <li><button type="submit" class="button" ng-click="findCard()">Search</button></li>
+            </ul>
+        </form>
 -->

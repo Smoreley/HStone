@@ -43,7 +43,7 @@ module.exports = function(app) {
     });
     
     // Saerch for card by partial name
-    app.post('/findcard', function(req,res) {
+    app.post('/findCardByName', function(req,res) {
 //        res.send("SuperData");
         
         var Request = unirest.get("https://omgvamp-hearthstone-v1.p.mashape.com/cards/search/"+req.body.text)
@@ -64,8 +64,36 @@ module.exports = function(app) {
         });
     });
     
+    // Search for card by Classs
+    app.post('/findCardByClass', function(req,res) {
+        
+        var Request = unirest.get("https://omgvamp-hearthstone-v1.p.mashape.com/cards/sets/{set}")
+        .headers({
+            'Accept': 'application/json',
+            'X-Mashape-Key': mashapeKey
+        })
+        .end(function(response, error) {
+            
+        });
+        
+    });
+    
+    // Search for card by Type
+    app.post('/findCardByType', function(req,res) {
+        
+        var Request = unirest.get("https://omgvamp-hearthstone-v1.p.mashape.com/cards/sets/{set}")
+        .headers({
+            'Accept': 'application/json',
+            'X-Mashape-Key': mashapeKey
+        })
+        .end(function(response, error) {
+            
+        });
+        
+    });
+    
     // Search for card by set
-    app.post('/findcardbyset', function(req,res) {
+    app.post('/findCardBySet', function(req,res) {
         
         var Request = unirest.get("https://omgvamp-hearthstone-v1.p.mashape.com/cards/sets/{set}")
         .headers({

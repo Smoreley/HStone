@@ -1,5 +1,11 @@
 $(document).ready(function () {
     $(document).foundation();
+    
+    $("#modalLauncher").click(function (e) {
+        new Foundation.Reveal($('#myModal')).open();
+    });
+    
+    
 });
 
 
@@ -12,7 +18,6 @@ var hstone = angular.module('hstone', [])
     function onSuccess(res){
         $scope.myData = res.data
         
-        
         $scope.helloTo = {};
         $scope.helloTo.title = "AngularJS";
         
@@ -22,12 +27,39 @@ var hstone = angular.module('hstone', [])
        console.log('Error: ' + res.data);
     });
     
-    $scope.findCard = function() {
+    $scope.searchCard = () => {
+        console.log("Search Button was pressed");
+    }
+    
+    $scope.deckBuild = () => {
+        console.log("Deck Builder");
+    }
+    
+    $scope.findCard = () => {
         $scope.page = {};
         $scope.page.title = $scope.formData.text;
         
+        console.log($scope.formData);
+        
+        switch($scope.formData.searchType) {
+            case "Name":
+                console.log("Search Type Name");
+                break;
+            case "Class":
+                console.log("Search Type Class");
+                break;
+            case "Type":
+                console.log("Search Type Type");
+                break;
+            case "Set":
+                console.log("Search Type Set");
+                break;
+            default:
+                console.log("ERROR! Invalid search type given");
+        }
+        
         // Sending post request to find card
-        $http.post('/findcard', $scope.formData).then(
+        $http.post('/findCardByName', $scope.formData).then(
         function onSuccess(res) {
 //            console.log(res.data);
 //            console.log(JSON.stringify(res.data) );
@@ -40,19 +72,7 @@ var hstone = angular.module('hstone', [])
             var index = 0;
             while(index < res.data.length) {
                 if(res.data[index].img && res.data[index].flavor) {               
-                    $scope.page.cardName = res.data[index].name;
-                    $scope.page.cardType = res.data[index].type;
-                    $scope.page.cardClass = res.data[index].playerClass;
-                    
-                    $scope.page.cardRace = res.data[index].race;
-                    $scope.page.cardCost = res.data[index].cost;
-                    $scope.page.cardHealth = res.data[index].health;
-                    
-                    $scope.page.cardAttack = res.data[index].attack;
-                    $scope.page.cardFlavor = res.data[index].flavor;
-                    $scope.page.cardSet = res.data[index].cardSet;
-                    
-                    $scope.page.image = res.data[index].img;
+                    $scope.displayCard(res.data[index]);
                     break;
                 }
                 index+= 1;
@@ -62,5 +82,22 @@ var hstone = angular.module('hstone', [])
             console.log("Unable to get the data ERROR!");
         })
     };
+    
+    // Display card
+    $scope.displayCard = (data) => {
+        $scope.page.cardName = data.name;
+        $scope.page.cardType = data.type;
+        $scope.page.cardClass = data.playerClass;
+
+        $scope.page.cardRace = data.race;
+        $scope.page.cardCost = data.cost;
+        $scope.page.cardHealth = data.health;
+
+        $scope.page.cardAttack = data.attack;
+        $scope.page.cardFlavor = data.flavor;
+        $scope.page.cardSet = data.cardSet;
+
+        $scope.page.image = data.img;
+    }
     
 }]);
