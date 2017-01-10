@@ -1,18 +1,26 @@
 $(document).ready(function () {
     $(document).foundation();
     
-    $("#modalLauncher").click(function (e) {
-        new Foundation.Reveal($('#myModal')).open();
+    // Create Global to hold modal window ref
+    window.gSearchModal = new Foundation.Reveal($('#myModal'));
+    
+    
+    $("#modalLauncher").click(function(e) {
+        gSearchModal.open();
     });
     
-    
+    // Toggle accordion
+    $("#accordionLauncher").click(function(e) {
+        $("#myAccordion").foundation('toggle',$("#item1"));
+    });
+      
 });
-
 
 // Setup hstone module
 var hstone = angular.module('hstone', [])
 .controller('mainController', ['$scope', '$http', function ($scope, $http) {
     $scope.formData = {};
+    $scope.searchType = undefined;
     
     $http.get('/').then(
     function onSuccess(res){
@@ -41,7 +49,7 @@ var hstone = angular.module('hstone', [])
         
         console.log($scope.formData);
         
-        switch($scope.formData.searchType) {
+        switch($scope.searchType) {
             case "Name":
                 console.log("Search Type Name");
                 break;
@@ -82,6 +90,17 @@ var hstone = angular.module('hstone', [])
             console.log("Unable to get the data ERROR!");
         })
     };
+    
+    $scope.setSearchType = (searchType) => {
+        console.log("Searching: "+searchType);
+        console.log("Is it the element: "+$scope.formData.test);
+        $scope.searchType = searchType;
+        
+        // Open Accordion
+        $("#myAccordion").foundation('down',$("#item1"));
+        // Close Modal
+        gSearchModal.close();
+    }
     
     // Display card
     $scope.displayCard = (data) => {

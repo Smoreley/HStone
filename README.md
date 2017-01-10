@@ -14,6 +14,8 @@ Hearthstone web-app for the community
 
 ---
 
+# Parameters
+
 ## Search Type
 * Name
 * Class
@@ -53,3 +55,23 @@ Hearthstone web-app for the community
 * Shaman
 * Warlock
 * Warrior
+
+### Search Outline
+
+## Name
+Name
+
+## Class
+Class -> cost -> attack -> health -> durability
+
+## Type
+Type -> cost -> attack -> health -> durability
+
+## Set
+Set -> cost -> attack -> health -> durability
+
+## Deck Builder
+* Card Limit (card.count <= 30)
+* Card class check (card.class == player.class)
+*
+

@@ -11,20 +11,24 @@
     </div>
     <div class="top-bar-right">
         <ul class="menu">
+<!--
             <li><button type="button" class="button" ng-click="searchCard()">Searching</button></li>
             <li><button type="button" class="button" ng-click="deckBuild()">Deck Build</button></li>
+-->
+            
             <li><button id="modalLauncher" class="button">Testing modal</button></li>
+            <li><button id="accordionLauncher" class="button">Accordion</button></li>
         </ul>
     </div>
 </div>
 
 
-<div class="top-bar accordion" data-accordion data-allow-all-closed="true">
+<div class="top-bar accordion" id="myAccordion" data-accordion data-allow-all-closed="true">
     
-    <div class="accordion-item is-active" data-accordion-item>
-        <a href="#" class="accordion-title">Search Accordion</a>
+    <div class="accordion-item" id="myItem" data-accordion-item>
+<!--        <a href="#" class="accordion-title">Search Accordion</a>-->
         
-        <div class="accordion-content" data-tab-content>
+        <div class="accordion-content" id="item1" data-tab-content>
         
         <form>
             <div class="row">
@@ -106,10 +110,11 @@
     <h2>Select Search Type</h2>
 
     <div class="expanded button-group">
-        <a class="button">Name</a>
-        <a class="button">Class</a>
-        <a class="button">Type</a>
-        <a class="button">Set</a>
+        <button type="button" class="button" ng-click="setSearchType('Name')">Name</button>
+        <button type="button" class="button" ng-click="setSearchType('Class')">Class</button>
+        <button type="button" class="button" ng-click="setSearchType('Type')">Type</button>
+        <button type="button" class="button" ng-click="setSearchType('Set')">Set</button>
+        <button type="button" class="button" ng-click="formData.test='fire'">Fire</button>
     </div>
 
     <button class="close-button" data-close aria-label="Close modal" type="button">
