@@ -60,14 +60,13 @@ module.exports = function(app) {
                 console.log(data);
                 res.send({});
             }
-
         });
     });
     
     // Search for card by Classs
     app.post('/findCardByClass', function(req,res) {
         
-        var Request = unirest.get("https://omgvamp-hearthstone-v1.p.mashape.com/cards/sets/{set}")
+        var Request = unirest.get("https://omgvamp-hearthstone-v1.p.mashape.com/cards/classes/"+req.body.cardClass)
         .headers({
             'Accept': 'application/json',
             'X-Mashape-Key': mashapeKey
@@ -80,14 +79,25 @@ module.exports = function(app) {
     
     // Search for card by Type
     app.post('/findCardByType', function(req,res) {
+        // Query object that gets passed in the get request
+        var queryInfo = {};
+        queryParamCheck(req.body, queryInfo);
         
-        var Request = unirest.get("https://omgvamp-hearthstone-v1.p.mashape.com/cards/sets/{set}")
+        var Request = unirest.get("https://omgvamp-hearthstone-v1.p.mashape.com/cards/types/"+req.body.cardType)
         .headers({
             'Accept': 'application/json',
             'X-Mashape-Key': mashapeKey
         })
+        .query(queryInfo)
         .end(function(response, error) {
-            
+            var data = response.body;
+            if(!error && response.statusCode == 200) {
+                res.send(data);
+            } else {
+                console.log("\nERROR!");
+                console.log(data);
+                res.send({});
+            }
         });
         
     });
@@ -95,14 +105,23 @@ module.exports = function(app) {
     // Search for card by set
     app.post('/findCardBySet', function(req,res) {
         
-        var Request = unirest.get("https://omgvamp-hearthstone-v1.p.mashape.com/cards/sets/{set}")
+        var Request = unirest.get("https://omgvamp-hearthstone-v1.p.mashape.com/cards/sets/"+req.body.cardSet)
         .headers({
             'Accept': 'application/json',
             'X-Mashape-Key': mashapeKey
         })
         .end(function(response, error) {
-            
+            console.log("\nERROR!");
+            console.log(data);
+            res.send({});
         });
         
     });
+}
+
+// If values exit then add them to the query
+function queryParamCheck(data, rtn) {
+    if(data.cardCost) rtn.cost = data.cardCost;
+    if(data.cardAttack) rtn.attack = data.cardAttack;
+    if(data.cardHealth) rtn.health = data.cardHealth;
 }

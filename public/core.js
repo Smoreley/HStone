@@ -52,12 +52,60 @@ var hstone = angular.module('hstone', [])
         switch($scope.searchType) {
             case "Name":
                 console.log("Search Type Name");
+                // Sending post request to find card
+                $http.post('/findCardByName', $scope.formData).then(
+                function onSuccess(res) {
+        //            console.log(res.data);
+        //            console.log(JSON.stringify(res.data) );
+        //            $scope.helloTo.title = res.data;
+
+                    console.log("cardLenght "+res.data.length);
+                    if(res.data.length == undefined) {
+                        console.log("no Cards");
+                    }
+
+                    var index = 0;
+                    while(index < res.data.length) {
+                        if(res.data[index].img && res.data[index].flavor) {               
+                            $scope.displayCard(res.data[index]);
+                            break;
+                        }
+                        index+= 1;
+                    }
+                },
+                function onError(res) {
+                    console.log("Unable to get the data ERROR!");
+                });
+                
                 break;
             case "Class":
                 console.log("Search Type Class");
                 break;
             case "Type":
                 console.log("Search Type Type");
+                // Sending post request to find card
+                $http.post('/findCardByType', $scope.formData).then(
+                function onSuccess(res) {
+
+                    console.log("cardLenght "+res.data.length);
+                    console.log(res);
+                    if(res.data.length == undefined) {
+                        console.log("no Cards");
+                    }
+
+                    var index = 0;
+                    while(index < res.data.length) {
+                        if(res.data[index].img && res.data[index].flavor) {               
+                            $scope.displayCard(res.data[index]);
+                            break;
+                        }
+                        index+= 1;
+                    }
+                },
+                function onError(res) {
+                    console.log("Unable to get the data ERROR!");
+                });
+                
                 break;
             case "Set":
                 console.log("Search Type Set");
@@ -66,29 +114,6 @@ var hstone = angular.module('hstone', [])
                 console.log("ERROR! Invalid search type given");
         }
         
-        // Sending post request to find card
-        $http.post('/findCardByName', $scope.formData).then(
-        function onSuccess(res) {
-//            console.log(res.data);
-//            console.log(JSON.stringify(res.data) );
-//            $scope.helloTo.title = res.data;
-            console.log("cardLenght "+res.data.length);
-            if(res.data.length == undefined) {
-                console.log("no Cards");
-            }
-            
-            var index = 0;
-            while(index < res.data.length) {
-                if(res.data[index].img && res.data[index].flavor) {               
-                    $scope.displayCard(res.data[index]);
-                    break;
-                }
-                index+= 1;
-            }
-        },
-        function onError(res) {
-            console.log("Unable to get the data ERROR!");
-        })
     };
     
     $scope.setSearchType = (searchType) => {

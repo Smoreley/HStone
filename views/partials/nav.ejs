@@ -11,13 +11,13 @@
     </div>
     <div class="top-bar-right">
         <ul class="menu">
+            <li><button type="button" id="modalLauncher" class="button">Searching</button></li>
+            <li><button type="button" id="accordionLauncher" class="button">Deck</button></li>
+            
 <!--
             <li><button type="button" class="button" ng-click="searchCard()">Searching</button></li>
-            <li><button type="button" class="button" ng-click="deckBuild()">Deck Build</button></li>
+            <li><button type="button" class="button" ng-click="deckBuild()">DeckBuild</button></li>
 -->
-            
-            <li><button id="modalLauncher" class="button">Testing modal</button></li>
-            <li><button id="accordionLauncher" class="button">Accordion</button></li>
         </ul>
     </div>
 </div>
@@ -25,33 +25,40 @@
 
 <div class="top-bar accordion" id="myAccordion" data-accordion data-allow-all-closed="true">
     
-    <div class="accordion-item" id="myItem" data-accordion-item>
-<!--        <a href="#" class="accordion-title">Search Accordion</a>-->
-        
+    <div class="accordion-item" id="myItem" data-accordion-item>        
         <div class="accordion-content" id="item1" data-tab-content>
         
         <form>
             <div class="row">
-
-                <div class="small-6 columns">
-                    <label>Card Name</label>
-                    <input type="text" class="form-control input-lg text-center" placeholder="Search" ng-model="formData.text">
+                <div class="medium-4 columns">
+                    <div class="input-group">
+                        <span class="input-group-label">Name</span>
+                        <input type="text" class="form-control input-group-field text-center" placeholder="Search" ng-model="formData.text">
+                    </div>
                 </div>
 
-                <div class="small-6 columns">
-                    <label>Card Set</label>
-                        <select ng-model="formData.cardClass">
+                <div class="medium-4 columns">
+                    <div class="input-group">
+                        <span class="input-group-label">Set</span>
+                        <select class="input-group-field" ng-model="formData.cardClass">
                             <option value="Basic">Basic</option>
                             <option value="Classic">Classic</option>
                             <option value="Naxxramas">Naxxramas</option>
                         </select>
+                    </div>                    
+                </div>
+                
+                <div class="medium-4 columns">
+                    <button type="submit" class="button expanded" ng-click="findCard()">Search</button>
                 </div>
             </div>
-
-            <div class="row">
-                <div class="medium-3 columns">
+            
+<!--            <div class="row">-->
+                <div class="medium-6 columns">
+                <div class="medium-6 columns">
                     <label>Player Class
                         <select>
+                            <option value="">none</option>
                             <option value="Neutral">Neutral</option>
                             <option value="Druid">Druid</option>
                             <option value="Hunter">Hunter</option>
@@ -65,33 +72,50 @@
                         </select>
                     </label>
                 </div>
-                <div class="medium-2 columns">
+                <div class="medium-6 columns">
+                    <label>Card Type</label>
+                    <select ng-model="formData.cardType">
+                        <option value="">none</option>
+                        <option value="Minion">Minion</option>
+                        <option value="Spell">Spell</option>
+                        <option value="Weapon">Weapon</option>
+                    </select>
+                </div>
+                </div>
+                
+                <div class="medium-6 columns">
+                <div class="medium-4 columns">
                     <label>Attack
-                        <select>
+                        <select ng-model="formData.cardAttack">
+                            <option value="">none</option>
                             <% for(var i=0; i < 10; i++) { %>
                                 <option value=<%= i %>><%= i %></option>    
                             <% } %>
                         </select>
                     </label>
                 </div>
-                <div class="medium-2 columns">
+                <div class="medium-4 columns">
                     <label>Health
-                        <select>
+                        <select ng-model="formData.cardHealth">
+                            <option value="">none</option>
                             <% for(var i=0; i < 10; i++) { %>
                                 <option value=<%= i %>><%= i %></option>    
                             <% } %>
                         </select>
                     </label>
                 </div>            
-                <div class="medium-2 columns">
+                <div class="medium-4 columns">
                     <label>Cost
-                        <select>
+                        <select ng-model="formData.cardCost">
+                            <option value="">none</option>
                             <% for(var i=0; i < 10; i++) { %>
-                                <option value=<%= i %>><%= i %></option>    
+                                <option value=<%= i %>><%= i %></option>
                             <% } %>
                         </select>
                     </label>
                 </div>
+<!--                </div>-->
+                
             </div>
 
             <div class="row">
