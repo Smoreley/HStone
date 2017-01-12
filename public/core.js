@@ -78,17 +78,56 @@ var hstone = angular.module('hstone', [])
                 });
                 
                 break;
-            case "Class":
+            case "Class":         
                 console.log("Search Type Class");
+                // Sending post request to find card by Class
+                $http.post('/findCardByClass', $scope.formData).then(
+                function onSuccess(res) {
+                    if(res.data.length == undefined) {
+                        console.log("no Cards");
+                    }
+
+                    var index = 0;
+                    while(index < res.data.length) {
+                        if(res.data[index].img && res.data[index].flavor) {               
+                            $scope.displayCard(res.data[index]);
+                            break;
+                        }
+                        index += 1;
+                    }
+                },
+                function onError(res) {
+                    console.log("Unable to get the data ERROR!");
+                });
+                
                 break;
-            case "Type":
+            case "Type":                
                 console.log("Search Type Type");
-                // Sending post request to find card
+                // Sending post request to find card by TYpe
                 $http.post('/findCardByType', $scope.formData).then(
                 function onSuccess(res) {
-
-                    console.log("cardLenght "+res.data.length);
-                    console.log(res);
+                    if(res.data.length == undefined) {
+                        console.log("no Cards");
+                    }
+                    var index = 0;
+                    while(index < res.data.length) {
+                        if(res.data[index].img && res.data[index].flavor) {               
+                            $scope.displayCard(res.data[index]);
+                            break;
+                        }
+                        index += 1;
+                    }
+                },
+                function onError(res) {
+                    console.log("Unable to get the data ERROR!");
+                });
+                
+                break;
+            case "Set":
+                console.log("Search Type Set");
+                // Sending post request to find card by TYpe
+                $http.post('/findCardBySet', $scope.formData).then(
+                function onSuccess(res) {
                     if(res.data.length == undefined) {
                         console.log("no Cards");
                     }
@@ -105,10 +144,6 @@ var hstone = angular.module('hstone', [])
                 function onError(res) {
                     console.log("Unable to get the data ERROR!");
                 });
-                
-                break;
-            case "Set":
-                console.log("Search Type Set");
                 break;
             default:
                 console.log("ERROR! Invalid search type given");
@@ -117,9 +152,31 @@ var hstone = angular.module('hstone', [])
     };
     
     $scope.setSearchType = (searchType) => {
+        $("#cardNameForm").hide();
+        $("#playerClassForm").hide();
+        $("#cardTypeForm").hide();
+        $("#cardSetForm").hide();
+        
         console.log("Searching: "+searchType);
         console.log("Is it the element: "+$scope.formData.test);
+        // Set Search Type
         $scope.searchType = searchType;
+        
+        // Show the correct form
+        switch($scope.searchType) {
+            case "Name":
+                $("#cardNameForm").show();
+                break;
+            case "Class":
+                $("#playerClassForm").show();
+                break;
+            case "Type":
+                $("#cardTypeForm").show();
+                break;
+            case "Set":
+                $("#cardSetForm").show();
+                break;       
+        }
         
         // Open Accordion
         $("#myAccordion").foundation('down',$("#item1"));

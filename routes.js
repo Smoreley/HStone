@@ -43,9 +43,7 @@ module.exports = function(app) {
     });
     
     // Saerch for card by partial name
-    app.post('/findCardByName', function(req,res) {
-//        res.send("SuperData");
-        
+    app.post('/findCardByName', function(req,res) {        
         var Request = unirest.get("https://omgvamp-hearthstone-v1.p.mashape.com/cards/search/"+req.body.text)
         .headers({
             'Accept': 'application/json',
@@ -65,14 +63,24 @@ module.exports = function(app) {
     
     // Search for card by Classs
     app.post('/findCardByClass', function(req,res) {
+        var queryInfo = {};
+        queryParamCheck(req.body, queryInfo);
         
         var Request = unirest.get("https://omgvamp-hearthstone-v1.p.mashape.com/cards/classes/"+req.body.cardClass)
         .headers({
             'Accept': 'application/json',
             'X-Mashape-Key': mashapeKey
         })
+        .query(queryInfo)
         .end(function(response, error) {
-            
+            var data = response.body;
+            if(!error && response.statusCode == 200) {
+                res.send(data);
+            } else {
+                console.log("\nERROR!");
+                console.log(data);
+                res.send({});
+            }
         });
         
     });
@@ -99,23 +107,29 @@ module.exports = function(app) {
                 res.send({});
             }
         });
-        
     });
     
     // Search for card by set
     app.post('/findCardBySet', function(req,res) {
+        var queryInfo = {};
+        queryParamCheck(req.body, queryInfo);
         
         var Request = unirest.get("https://omgvamp-hearthstone-v1.p.mashape.com/cards/sets/"+req.body.cardSet)
         .headers({
             'Accept': 'application/json',
             'X-Mashape-Key': mashapeKey
         })
+        .query(queryInfo)
         .end(function(response, error) {
-            console.log("\nERROR!");
-            console.log(data);
-            res.send({});
-        });
-        
+            var data = response.body;
+            if(!error && response.statusCode == 200) {
+                res.send(data);
+            } else {
+                console.log("\nERROR!");
+                console.log(data);
+                res.send({});
+            }
+        }); 
     });
 }
 
