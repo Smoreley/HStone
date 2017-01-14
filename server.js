@@ -17,7 +17,6 @@ app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 
 var http = require("http");
-
     
 // redirect uundifined pages to 404
 app.use(function(req, res) {

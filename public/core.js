@@ -17,10 +17,31 @@ $(document).ready(function () {
 });
 
 // Setup hstone module
-var hstone = angular.module('hstone', [])
-.controller('mainController', ['$scope', '$http', function ($scope, $http) {
+var hstone = angular.module('hstone', ['ngRoute']);
+
+hstone.config(function ($routeProvider, $locationProvider) {
+//    $locationProvider.hashPrefix('');
+    
+    $routeProvider
+    .when('/', {
+        templateUrl: 'pages/card.html',
+        controller: 'mainController'
+    })
+    .when('/buildme', {
+        templateUrl: 'pages/build.html',
+        controller: 'buildController'
+    })
+});
+
+hstone.controller("buildController", ['$scope', '$log', function($scope, $log) {
+    $scope.scopeName = "Build";
+    console.log("heyloo!");
+}]);
+
+hstone.controller('mainController', ['$scope', '$http', function ($scope, $http) {
     $scope.formData = {};
     $scope.searchType = undefined;
+    $scope.scopeName = "Main";
     
     $http.get('/').then(
     function onSuccess(res){
