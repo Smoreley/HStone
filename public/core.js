@@ -21,7 +21,6 @@ var hstone = angular.module('hstone', ['ngRoute']);
 
 hstone.config(function ($routeProvider, $locationProvider) {
 //    $locationProvider.hashPrefix('');
-    
     $routeProvider
     .when('/', {
         templateUrl: 'pages/card.html',
@@ -33,15 +32,24 @@ hstone.config(function ($routeProvider, $locationProvider) {
     })
 });
 
+// Deck Builder controller
 hstone.controller("buildController", ['$scope', '$log', function($scope, $log) {
     $scope.scopeName = "Build";
     console.log("heyloo!");
 }]);
 
+// Main Controller
 hstone.controller('mainController', ['$scope', '$http', function ($scope, $http) {
     $scope.formData = {};
     $scope.searchType = undefined;
     $scope.scopeName = "Main";
+    
+    $scope.nameOfClasses = [];
+    $scope.nameOfTypes = [];
+    $scope.nameOfSets = [];
+    
+    // Array of cards currently loaded
+    $scope.cardsOnDisplay = [];
     
     $http.get('/').then(
     function onSuccess(res){
@@ -50,7 +58,7 @@ hstone.controller('mainController', ['$scope', '$http', function ($scope, $http)
         $scope.helloTo = {};
         $scope.helloTo.title = "AngularJS";
         
-        console.log("WE did it");
+        $scope.setUp();
     },
     function onError(res) {
        console.log('Error: ' + res.data);
@@ -58,16 +66,15 @@ hstone.controller('mainController', ['$scope', '$http', function ($scope, $http)
     
     $scope.searchCard = () => {
         console.log("Search Button was pressed");
-    }
+    };
     
     $scope.deckBuild = () => {
         console.log("Deck Builder");
-    }
+    };
     
     $scope.findCard = () => {
         $scope.page = {};
-        $scope.page.title = $scope.formData.text;
-        
+        $scope.page.title = $scope.formData.text;        
         console.log($scope.formData);
         
         switch($scope.searchType) {
@@ -127,17 +134,10 @@ hstone.controller('mainController', ['$scope', '$http', function ($scope, $http)
                 // Sending post request to find card by TYpe
                 $http.post('/findCardByType', $scope.formData).then(
                 function onSuccess(res) {
-                    if(res.data.length == undefined) {
-                        console.log("no Cards");
-                    }
-                    var index = 0;
-                    while(index < res.data.length) {
-                        if(res.data[index].img && res.data[index].flavor) {               
-                            $scope.displayCard(res.data[index]);
-                            break;
-                        }
-                        index += 1;
-                    }
+                    if(res.data.length == undefined) { console.log("no Cards"); }
+                    
+                    $scope.cardProccess(res.data);
+                    $scope.displayCard($scope.cardsOnDisplay[0]);
                 },
                 function onError(res) {
                     console.log("Unable to get the data ERROR!");
@@ -149,18 +149,10 @@ hstone.controller('mainController', ['$scope', '$http', function ($scope, $http)
                 // Sending post request to find card by TYpe
                 $http.post('/findCardBySet', $scope.formData).then(
                 function onSuccess(res) {
-                    if(res.data.length == undefined) {
-                        console.log("no Cards");
-                    }
-
-                    var index = 0;
-                    while(index < res.data.length) {
-                        if(res.data[index].img && res.data[index].flavor) {               
-                            $scope.displayCard(res.data[index]);
-                            break;
-                        }
-                        index+= 1;
-                    }
+                    if(res.data.length == undefined) { console.log("no Cards"); }
+                    
+                    $scope.cardProccess(res.data);
+                    $scope.displayCard($scope.cardsOnDisplay[0]);
                 },
                 function onError(res) {
                     console.log("Unable to get the data ERROR!");
@@ -168,8 +160,7 @@ hstone.controller('mainController', ['$scope', '$http', function ($scope, $http)
                 break;
             default:
                 console.log("ERROR! Invalid search type given");
-        }
-        
+        } 
     };
     
     $scope.setSearchType = (searchType) => {
@@ -203,6 +194,18 @@ hstone.controller('mainController', ['$scope', '$http', function ($scope, $http)
         $("#myAccordion").foundation('down',$("#item1"));
         // Close Modal
         gSearchModal.close();
+    };
+    
+    // Proccess card before adding them to display Array
+    $scope.cardProccess = (cardArray) => {
+        // Clear Array
+        $scope.cardsOnDisplay = [];
+        
+        for(var i = 0; i < cardArray.length && i < 10; i++) {
+            if(cardArray[i].img) {
+                $scope.cardsOnDisplay.push(cardArray[i]);
+            }
+        }
     }
     
     // Display card
@@ -220,6 +223,19 @@ hstone.controller('mainController', ['$scope', '$http', function ($scope, $http)
         $scope.page.cardSet = data.cardSet;
 
         $scope.page.image = data.img;
-    }
+    };
+    
+    // Populate drop down forms for search
+    $scope.setUp = () => {
+        $http.post('/getInfo', $scope.formData)
+        .then(function onSuccess(res) {
+            $scope.nameOfClasses = res.data.classes;
+            $scope.nameOfTypes = res.data.types;
+            $scope.nameOfSets = res.data.standard;
+        },
+        function onError(res) {
+            console.log("\tError: Unable to get info");
+        });
+    };
     
 }]);

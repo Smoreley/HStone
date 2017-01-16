@@ -10,7 +10,7 @@
     <div class="top-bar-right">
         <ul class="menu">
             <li><button type="button" id="modalLauncher" class="button">Searching</button></li>
-            <li><button type="button" id="accordionLauncher" class="button">Deck</button></li>
+            <li><button type="button" id="deckBuilderLauncher" class="button">Deck</button></li>
 <!--
             <li><button type="button" class="button" ng-click="searchCard()">Searching</button></li>
             <li><button type="button" class="button" ng-click="deckBuild()">DeckBuild</button></li>
@@ -19,11 +19,17 @@
     </div>
 </div>
 
-
+<!--Search Form-->
 <div class="top-bar accordion" id="myAccordion" data-accordion data-allow-all-closed="true">
     
     <div class="accordion-item" id="myItem" data-accordion-item>        
-        <div class="accordion-content" id="item1" data-tab-content>
+        <div class="accordion-content callout" id="item1" data-tab-content>
+            
+        <button type="button" id="accordionLauncher" class="close-button float-right" type="button">
+            <span class="show-for-sr">Close</span>
+            <span aria-hidden="true">&times;</span>
+        </button>
+            
         <form>                        
             <div class="row">
                 <div class="medium-3 columns">
@@ -37,39 +43,24 @@
                     <div class="medium-12 columns" id="cardSetForm">
                         <div class="input-group">
                             <span class="input-group-label">Set</span>
-                            <select class="input-group-field" ng-model="formData.cardSet">
-                                <option value="Basic">Basic</option>
-                                <option value="Classic">Classic</option>
-                                <option value="Naxxramas">Naxxramas</option>
+                            <select ng-model="formData.cardSet" ng-options="item as item for item in nameOfSets" class="input-group-field">
+                                <option value="">Select Set</option>
                             </select>
                         </div>                    
                     </div>
                     
                     <div class="medium-12 columns" id="playerClassForm">
                         <label>Player Class
-                            <select ng-model="formData.cardClass">
-                                <option value="">none</option>
-                                <option value="Neutral">Neutral</option>
-                                <option value="Druid">Druid</option>
-                                <option value="Hunter">Hunter</option>
-                                <option value="Mage">Mage</option>
-                                <option value="Paladin">Paladin</option>
-                                <option value="Priest">Priest</option>
-                                <option value="Rogue">Rogue</option>                        
-                                <option value="Shaman">Shaman</option>
-                                <option value="Warlock">Warlock</option>
-                                <option value="Warrior">Warrior</option>
+                            <select ng-model="formData.cardClass" ng-options="item as item for item in nameOfClasses">
+                                <option value="">Select Class</option>
                             </select>
                         </label>
                     </div>
                     
                     <div class="medium-12 columns" id="cardTypeForm">
                         <label>Card Type</label>
-                        <select ng-model="formData.cardType">
-                            <option value="">none</option>
-                            <option value="Minion">Minion</option>
-                            <option value="Spell">Spell</option>
-                            <option value="Weapon">Weapon</option>
+                        <select ng-model="formData.cardType" ng-options="item as item for item in nameOfTypes">
+                            <option value="">Select Type</option>
                         </select>
                     </div>
                 </div>
@@ -110,8 +101,7 @@
                     </div>
                 </div>
             </div>
-        </form>
-            
+        </form>            
         </div>
     </div>
 </div>
@@ -129,6 +119,6 @@
     </div>
 
     <button class="close-button" data-close aria-label="Close modal" type="button">
-    <span aria-hidden="true">&times;</span>
+        <span aria-hidden="true">&times;</span>
     </button>
 </div>

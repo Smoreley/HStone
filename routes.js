@@ -42,6 +42,19 @@ module.exports = function(app) {
         res.render('404',{title:"404"});
     });
     
+    // Get info
+    app.post('/getInfo', function(req,res) {
+       var Request = unirest.get("https://omgvamp-hearthstone-v1.p.mashape.com/info")
+       .headers({
+           'Accept': 'application/json',
+           'X-Mashape-Key': mashapeKey
+       })
+       .end(function(response, error) {
+           var data = response.body;
+           res.send(data);
+       })
+    });
+    
     // Saerch for card by partial name
     app.post('/findCardByName', function(req,res) {        
         var Request = unirest.get("https://omgvamp-hearthstone-v1.p.mashape.com/cards/search/"+req.body.text)
