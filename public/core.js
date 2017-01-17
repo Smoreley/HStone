@@ -2,7 +2,8 @@ $(document).ready(function () {
     $(document).foundation();
     
     // Create Global to hold modal window ref
-    window.gSearchModal = new Foundation.Reveal($('#myModal'));
+    window.gSearchModal = new Foundation.Reveal($('#searchModeModal'));
+    window.gCardDeck = new Deck("My Awesome Deck", "Mage");
     
     
     $("#modalLauncher").click(function(e) {
@@ -35,7 +36,12 @@ hstone.config(function ($routeProvider, $locationProvider) {
 // Deck Builder controller
 hstone.controller("buildController", ['$scope', '$log', function($scope, $log) {
     $scope.scopeName = "Build";
-    console.log("heyloo!");
+    
+    // Bring deck into scope
+    $scope.cardDeck = window.gCardDeck;
+    
+    
+    
 }]);
 
 // Main Controller
@@ -96,6 +102,9 @@ hstone.controller('mainController', ['$scope', '$http', function ($scope, $http)
                     while(index < res.data.length) {
                         if(res.data[index].img && res.data[index].flavor) {               
                             $scope.displayCard(res.data[index]);
+                            
+                            window.gCardDeck.addCard(res.data[index]);
+                            
                             break;
                         }
                         index+= 1;
@@ -169,8 +178,6 @@ hstone.controller('mainController', ['$scope', '$http', function ($scope, $http)
         $("#cardTypeForm").hide();
         $("#cardSetForm").hide();
         
-        console.log("Searching: "+searchType);
-        console.log("Is it the element: "+$scope.formData.test);
         // Set Search Type
         $scope.searchType = searchType;
         

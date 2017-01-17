@@ -1,2 +1,36 @@
-<h2>Scope Value: {{ scopeName }}</h2>
-<h1>This is the build Page!</h1>
+<h4>Scope Value: {{ scopeName }}</h4>
+
+<div class="row">    
+    <div class="small-6 columns">
+        <h2>{{cardDeck.name}}</h2>    
+    </div>
+    <div class="small-6 columns">
+        <h2>{{cardDeck.deckClass}}</h2>    
+    </div>
+</div>
+
+<div class="row">
+    <div class="medium-12 columns">
+    <div class="success progress" role="progressbar" tabindex="0" aria-valuemin="0" aria-valuemax="30">
+        <div class="progress-meter" style="width:calc(100% * {{cardDeck.getDeck().length}} / 30)">
+            <p class="progress-meter-text">{{cardDeck.getDeck().length}}/30</p>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div ng-repeat="n in cardDeck.getDeck() track by $index">
+        
+<!--
+        <div ng-if="$index%12 == 0" class="animate-if">
+            <h1>Testing the if</h1>
+        </div>
+-->
+        
+        <div class="small-3 columns">
+            {{n.name}}
+            {{$index}}
+            <img class="thumbnail" src={{n.img}} ng-click="cardDeck.removeByIndex($index)">
+        </div>        
+    </div>
+</div>
