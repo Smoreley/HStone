@@ -1,0 +1,45 @@
+<!-- SEARCH MODAL WINDOW -->
+<div class="reveal" id="searchModeModal" data-reveal>
+    <h2>Select Search Type</h2>
+
+    <div class="expanded button-group">
+        <button type="button" class="button" ng-click="setSearchType('Name')">Name</button>
+        <button type="button" class="button" ng-click="setSearchType('Class')">Class</button>
+        <button type="button" class="button" ng-click="setSearchType('Type')">Type</button>
+        <button type="button" class="button" ng-click="setSearchType('Set')">Set</button>
+<!--        <button type="button" class="button" ng-click="formData.test='fire'">Fire</button>-->
+    </div>
+
+    <button class="close-button" data-close aria-label="Close modal" type="button">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
+<!-- DECK MODAL WINDOW -->
+<div class="reveal" id="deckSetupModal" data-reveal>
+    <h2>Create new Deck</h2>
+    
+    <form>
+    
+    <div class="row">        
+        <label>Deck Name:</label>
+        <input type="text" ng-model="formData.deckName" placeholder="Enter deck name">
+        
+    </div>
+    
+    <div class="row">        
+        <label>Select Class
+            <select ng-model="formData.playerClass" ng-options="item as item for item in nameOfClasses">
+                <option value="">Select Class</option>
+            </select>
+        </label>
+    </div>
+    
+    <button type="submit" class="button" ng-click="createDeck()">Create</button>
+    
+    </form>
+        
+    <button class="close-button" data-close aria-label="Close modal" type="button">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>

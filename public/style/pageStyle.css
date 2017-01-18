@@ -43,7 +43,7 @@ ul {
 body {
 /*    background:linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.)), url(imgs/class_background/warrior_bg.jpg);*/
     background-color: #f1f1f1;
-    background-image: url(imgs/class_background/shaman_bg.jpg);
+/*    background-image: url(../imgs/class_background/shaman_bg.jpg);*/
     background-size: 50vw;
     background-repeat: no-repeat;
     background-position: 50% 0%;

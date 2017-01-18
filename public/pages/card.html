@@ -3,7 +3,7 @@
 <div class="infoSet callout">
     <div class="row">
         <div class="large-6 medium-6 columns">
-            <img src={{page.image}} >
+            <img src={{page.image}} ng-click="addToDeck(page.cardName)">
         </div>
 
         <div class="large-6 medium-6 columns">
@@ -21,5 +21,16 @@
                 <li>Set:         {{page.cardSet}}</li>
             </ul>
         </div>
+    </div>
+</div>
+
+<div class="row">
+    <div ng-repeat="n in cardsOnDisplay track by $index">
+        
+        <div class="small-3 columns">
+            {{n.name}}
+            <img class="thumbnail" src={{n.img}}>
+        </div>
+    
     </div>
 </div>

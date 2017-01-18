@@ -37,6 +37,10 @@ module.exports = function(app) {
         });
     });
     
+    app.get("/test", function(req, res) {
+        res.render('test',{title:"Test"});
+    })
+    
     // Unfound Page
     app.get('/404', function(req,res) {
         res.render('404',{title:"404"});

@@ -1,11 +1,16 @@
 <h4>Scope Value: {{ scopeName }}</h4>
 
+
+<div ng-if="cardDeck == null">
+    <h1>No Deck selected, please select one or create a new one</h1>
+</div>
+
 <div class="row">    
     <div class="small-6 columns">
         <h2>{{cardDeck.name}}</h2>    
     </div>
     <div class="small-6 columns">
-        <h2>{{cardDeck.deckClass}}</h2>    
+        <h2>{{cardDeck.getClass()}}</h2>    
     </div>
 </div>
 
@@ -20,12 +25,6 @@
 
 <div class="row">
     <div ng-repeat="n in cardDeck.getDeck() track by $index">
-        
-<!--
-        <div ng-if="$index%12 == 0" class="animate-if">
-            <h1>Testing the if</h1>
-        </div>
--->
         
         <div class="small-3 columns">
             {{n.name}}

@@ -4,60 +4,17 @@
         <% include partials/header.ejs %>
     </head>
     
-    <body ng-controller="mainController">                
+    <body ng-controller="mainController">     
+        
+        <a href='#!' class="button">cardSearch</a>
+        <a href='#!/buildme' class="button">current Deck</a>
+        <a href='#!/decks' class="button">Decks</a>
+        
+        <% include partials/modals.ejs %>
+        
         <% include partials/nav.ejs %>
         
         <div ng-view></div>
-        
-        <div class="button-group">
-            <a class="button">Primary Action</a>    
-            <a class="dropdown button arrow-only">
-                <span class="show-for-sr">Show menu</span>
-            </a>
-            
-            <a class='dropdown button arrow-only' type='button' data-toggle='exampleDropdown'>
-                <span class="show-for-sr">Show menu</span>
-            </a>
-        </div>        
-        
-        <div class='dropdown-pane bottom' id='exampleDropdown' data-dropdown>
-            <ul class="menu">
-                <li><a href='#'>Stop</a></li>
-                <li><a href='#'>Go</a></li>
-                <li><a href='#'>Going places</a></li>
-            </ul>
-        </div>
-        
-        <a href='#!' class="button">Main</a>
-        <a href='#!/buildme' class="button">Sub</a>
-        
-            
-        <div class="row">
-            <div class="large-12 columns">
-                <p>{{page.title}}</p>
-            </div>
-        </div>
-                
-        <div class="row">
-            <div class="small-6 columns">
-                <label>Name:</label>
-                <input type="text" ng-model="yourName" placeholder="Enter a name here">
-                <hr>
-            </div>
-            <div class="small-6 columns">
-                <p>Hello {{yourName}}</p>
-            </div>
-        </div>    
-        
-        <div class="row">
-            <div class="small-6 columns">
-                <input type="text" ng-model="yourImage" placeholder="Put Image Url here">
-            </div>
-            
-            <div class="small-6 columns">
-                <img src={{yourImage}}>
-            </div>
-        </div>
     
     </body>
 </html>

@@ -3,7 +3,8 @@ $(document).ready(function () {
     
     // Create Global to hold modal window ref
     window.gSearchModal = new Foundation.Reveal($('#searchModeModal'));
-    window.gCardDeck = new Deck("My Awesome Deck", "Mage");
+    window.gDeckModal = new Foundation.Reveal($('#deckSetupModal'));
+    window.gCardDeck = new Deck("base", "unknown");
     
     
     $("#modalLauncher").click(function(e) {
@@ -13,6 +14,10 @@ $(document).ready(function () {
     // Toggle accordion
     $("#accordionLauncher").click(function(e) {
         $("#myAccordion").foundation('toggle',$("#item1"));
+    });
+    
+    $("#deckBuilderLauncher").click(function(e) {
+        gDeckModal.open();
     });
       
 });
@@ -31,51 +36,59 @@ hstone.config(function ($routeProvider, $locationProvider) {
         templateUrl: 'pages/build.html',
         controller: 'buildController'
     })
+    .when('/decks', {
+        templateUrl: 'pages/decks.html'
+    })
 });
 
 // Deck Builder controller
 hstone.controller("buildController", ['$scope', '$log', function($scope, $log) {
     $scope.scopeName = "Build";
     
-    // Bring deck into scope
-    $scope.cardDeck = window.gCardDeck;
-    
-    
+    console.log($scope);
     
 }]);
 
 // Main Controller
 hstone.controller('mainController', ['$scope', '$http', function ($scope, $http) {
-    $scope.formData = {};
-    $scope.searchType = undefined;
     $scope.scopeName = "Main";
+    $scope.formData = {};
     
+    // Method to search a card by
+    $scope.searchType = undefined;
+    
+    // Names of
     $scope.nameOfClasses = [];
     $scope.nameOfTypes = [];
     $scope.nameOfSets = [];
     
     // Array of cards currently loaded
-    $scope.cardsOnDisplay = [];
+//    $scope.cardsOnDisplay = [];
     
     $http.get('/').then(
-    function onSuccess(res){
-        $scope.myData = res.data
-        
-        $scope.helloTo = {};
-        $scope.helloTo.title = "AngularJS";
-        
-        $scope.setUp();
-    },
-    function onError(res) {
-       console.log('Error: ' + res.data);
-    });
+        function onSuccess(res) {        
+            $scope.setUp();
+        },
+        function onError(res) {
+           console.log('Error: ' + res.data);
+        }
+    );
     
     $scope.searchCard = () => {
         console.log("Search Button was pressed");
     };
     
-    $scope.deckBuild = () => {
+    $scope.createDeck = () => {
         console.log("Deck Builder");
+        window.gCardDeck = new Deck($scope.formData.deckName, $scope.formData.playerClass);
+        $scope.cardDeck = window.gCardDeck;
+        
+        // Close Modal
+        window.gDeckModal.close();
+    };
+    
+    $scope.setCurrentDeck = () => {
+        
     };
     
     $scope.findCard = () => {
@@ -93,22 +106,10 @@ hstone.controller('mainController', ['$scope', '$http', function ($scope, $http)
         //            console.log(JSON.stringify(res.data) );
         //            $scope.helloTo.title = res.data;
 
-                    console.log("cardLenght "+res.data.length);
-                    if(res.data.length == undefined) {
-                        console.log("no Cards");
-                    }
+                    if(res.data.length == undefined) { console.log("no Cards"); }
 
-                    var index = 0;
-                    while(index < res.data.length) {
-                        if(res.data[index].img && res.data[index].flavor) {               
-                            $scope.displayCard(res.data[index]);
-                            
-                            window.gCardDeck.addCard(res.data[index]);
-                            
-                            break;
-                        }
-                        index+= 1;
-                    }
+                    $scope.cardProccess(res.data);
+                    $scope.displayCard($scope.cardsOnDisplay[0]);
                 },
                 function onError(res) {
                     console.log("Unable to get the data ERROR!");
@@ -120,18 +121,10 @@ hstone.controller('mainController', ['$scope', '$http', function ($scope, $http)
                 // Sending post request to find card by Class
                 $http.post('/findCardByClass', $scope.formData).then(
                 function onSuccess(res) {
-                    if(res.data.length == undefined) {
-                        console.log("no Cards");
-                    }
-
-                    var index = 0;
-                    while(index < res.data.length) {
-                        if(res.data[index].img && res.data[index].flavor) {               
-                            $scope.displayCard(res.data[index]);
-                            break;
-                        }
-                        index += 1;
-                    }
+                    if(res.data.length == undefined) { console.log("no Cards"); }
+                    
+                    $scope.cardProccess(res.data);
+                    $scope.displayCard($scope.cardsOnDisplay[0]);
                 },
                 function onError(res) {
                     console.log("Unable to get the data ERROR!");
@@ -177,6 +170,7 @@ hstone.controller('mainController', ['$scope', '$http', function ($scope, $http)
         $("#playerClassForm").hide();
         $("#cardTypeForm").hide();
         $("#cardSetForm").hide();
+        $("#attackHealthCostForm").show();
         
         // Set Search Type
         $scope.searchType = searchType;
@@ -185,6 +179,7 @@ hstone.controller('mainController', ['$scope', '$http', function ($scope, $http)
         switch($scope.searchType) {
             case "Name":
                 $("#cardNameForm").show();
+                $("#attackHealthCostForm").hide();
                 break;
             case "Class":
                 $("#playerClassForm").show();
@@ -208,14 +203,16 @@ hstone.controller('mainController', ['$scope', '$http', function ($scope, $http)
         // Clear Array
         $scope.cardsOnDisplay = [];
         
-        for(var i = 0; i < cardArray.length && i < 10; i++) {
-            if(cardArray[i].img) {
+        for(var i = 0; i < cardArray.length && $scope.cardsOnDisplay.length <= 8; i++) {
+            if(cardArray[i].img && cardArray[i].text) {
                 $scope.cardsOnDisplay.push(cardArray[i]);
             }
         }
+        
+        console.log($scope.cardsOnDisplay);
     }
     
-    // Display card
+    // Display card data
     $scope.displayCard = (data) => {
         $scope.page.cardName = data.name;
         $scope.page.cardType = data.type;
@@ -243,6 +240,13 @@ hstone.controller('mainController', ['$scope', '$http', function ($scope, $http)
         function onError(res) {
             console.log("\tError: Unable to get info");
         });
+    };
+    
+    $scope.addToDeck = (card) => {
+//        window.gCardDeck.addCard(res.data[index]);
+        
+        if(window.gCardDeck != null)
+            window.gCardDeck.addCard($scope.cardsOnDisplay[0]);
     };
     
 }]);

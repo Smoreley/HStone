@@ -4,12 +4,13 @@
             <li class="menu-text">H-Stone</li>
             <li><a href="/">Home</a></li>
             <li><a href="/find">Find</a></li>
+            <li><a href="/test">Test</a></li>
             <li><a href="/about">About</a></li>
         </ul>
     </div>
     <div class="top-bar-right">
         <ul class="menu">
-            <li><button type="button" id="modalLauncher" class="button">Searching</button></li>
+            <li><button type="button" id="modalLauncher" class="button">Search</button></li>
             <li><button type="button" id="deckBuilderLauncher" class="button">Deck</button></li>
 <!--
             <li><button type="button" class="button" ng-click="searchCard()">Searching</button></li>
@@ -30,22 +31,20 @@
             <span aria-hidden="true">&times;</span>
         </button>
             
-        <form>                        
+        <form>
             <div class="row">
-                <div class="medium-3 columns" id="cardNameForm">
-                    <div class="input-group">
-                        <span class="input-group-label">Name</span>
-                        <input type="text" class="input-group-field text-center" placeholder="Search" ng-model="formData.text">
-                    </div>
+                <div class="medium-9 columns" id="cardNameForm">
+                    <label>Name
+                        <input type="text" placeholder="Search" ng-model="formData.text">
+                    </label>
                 </div>
 
                 <div class="medium-3 columns" id="cardSetForm">
-                    <div class="input-group">
-                        <span class="input-group-label">Set</span>
-                        <select ng-model="formData.cardSet" ng-options="item as item for item in nameOfSets" class="input-group-field">
+                    <label>Card Set
+                        <select ng-model="formData.cardSet" ng-options="item as item for item in nameOfSets">
                             <option value="">Select Set</option>
                         </select>
-                    </div>                    
+                    </label>           
                 </div>
 
                 <div class="medium-3 columns" id="playerClassForm">
@@ -64,58 +63,45 @@
                 </div>
                 
 <!--Parameters-->
-                <div class="medium-2 columns">
-                    <label>Attack
-                        <select ng-model="formData.cardAttack">
-                            <option value="">none</option>
-                            <% for(var i=0; i < 10; i++) { %>
-                                <option value=<%= i %>><%= i %></option>    
-                            <% } %>
-                        </select>
-                    </label>
+                <div class="medium-6 columns" id="attackHealthCostForm">
+                    <div class="medium-4 columns">
+                        <label>Attack
+                            <select ng-model="formData.cardAttack">
+                                <option value="">none</option>
+                                <% for(var i=0; i < 10; i++) { %>
+                                    <option value=<%= i %>><%= i %></option>    
+                                <% } %>
+                            </select>
+                        </label>
+                    </div>
+                    <div class="medium-4 columns">
+                        <label>Health
+                            <select ng-model="formData.cardHealth">
+                                <option value="">none</option>
+                                <% for(var i=0; i < 10; i++) { %>
+                                    <option value=<%= i %>><%= i %></option>    
+                                <% } %>
+                            </select>
+                        </label>
+                    </div>            
+                    <div class="medium-4 columns">
+                        <label>Cost
+                            <select ng-model="formData.cardCost">
+                                <option value="">none</option>
+                                <% for(var i=0; i < 10; i++) { %>
+                                    <option value=<%= i %>><%= i %></option>
+                                <% } %>
+                            </select>
+                        </label>
+                    </div>
                 </div>
-                <div class="medium-2 columns">
-                    <label>Health
-                        <select ng-model="formData.cardHealth">
-                            <option value="">none</option>
-                            <% for(var i=0; i < 10; i++) { %>
-                                <option value=<%= i %>><%= i %></option>    
-                            <% } %>
-                        </select>
-                    </label>
-                </div>            
-                <div class="medium-2 columns">
-                    <label>Cost
-                        <select ng-model="formData.cardCost">
-                            <option value="">none</option>
-                            <% for(var i=0; i < 10; i++) { %>
-                                <option value=<%= i %>><%= i %></option>
-                            <% } %>
-                        </select>
-                    </label>
-                </div>
+                    
                 <div class="medium-3 columns">
+                    <label>Search</label>
                     <button type="submit" class="button expanded" ng-click="findCard()">Search</button>
                 </div>                
             </div>
         </form>            
         </div>
     </div>
-</div>
-
-<!-- MODAL WINDOW -->
-<div class="reveal" id="searchModeModal" data-reveal>
-    <h2>Select Search Type</h2>
-
-    <div class="expanded button-group">
-        <button type="button" class="button" ng-click="setSearchType('Name')">Name</button>
-        <button type="button" class="button" ng-click="setSearchType('Class')">Class</button>
-        <button type="button" class="button" ng-click="setSearchType('Type')">Type</button>
-        <button type="button" class="button" ng-click="setSearchType('Set')">Set</button>
-<!--        <button type="button" class="button" ng-click="formData.test='fire'">Fire</button>-->
-    </div>
-
-    <button class="close-button" data-close aria-label="Close modal" type="button">
-        <span aria-hidden="true">&times;</span>
-    </button>
 </div>

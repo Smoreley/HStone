@@ -1,8 +1,8 @@
 // Deck
 class Deck {
-    constructor(name, deckClass) {
+    constructor(name, playerClass) {
         this.name = name;
-        this.deckClass = deckClass;
+        this.playerClass = playerClass;
         this.deck = [];
     }
     
@@ -10,11 +10,15 @@ class Deck {
         return this.deck;
     }
     
+    getClass() {
+        return this.playerClass;
+    }
+    
     // Add card to deck (sorts them by cost)
     addCard(cardInfo) {
         // Block adding more then 99 cards to deck
         // or if card class doesn't match this deck and it is not Neutral
-        if(this.deck.length >= 99 || cardInfo.playerClass != this.deckClass && cardInfo.playerClass != "Neutral") { return;}
+        if(this.deck.length >= 99 || cardInfo.playerClass != this.playerClass && cardInfo.playerClass != "Neutral") { return;}
         
         for(var i=0; i < this.deck.length; i++) {            
             if(cardInfo.cost > this.deck[i].cost) {
