@@ -4,40 +4,40 @@ $(document).ready(function () {
     // Create Global to hold modal window ref
     window.gSearchModal = new Foundation.Reveal($('#searchModeModal'));
     window.gDeckModal = new Foundation.Reveal($('#deckSetupModal'));
-    window.gCardDeck = new Deck("base", "unknown");
+    window.gactiveDeck = new Deck("base", "unknown");
+    window.gDecks = [];
     
-    
+    // Launch Modal
     $("#modalLauncher").click(function(e) {
         gSearchModal.open();
-    });
-    
-    // Toggle accordion
-    $("#accordionLauncher").click(function(e) {
-        $("#myAccordion").foundation('toggle',$("#item1"));
     });
     
     $("#deckBuilderLauncher").click(function(e) {
         gDeckModal.open();
     });
-      
+    
+    // Toggle accordion
+    $("#accordionLauncher").click(function(e) {
+        $("#myAccordion").foundation('toggle',$("#item1"));
+    });  
 });
 
 // Setup hstone module
-var hstone = angular.module('hstone', ['ngRoute']);
+var hstone = angular.module('hstone', ['ngRoute', 'ngCookies']);
 
 hstone.config(function ($routeProvider, $locationProvider) {
 //    $locationProvider.hashPrefix('');
     $routeProvider
     .when('/', {
-        templateUrl: 'pages/card.html',
+        templateUrl: 'pages/cardSearch.html',
         controller: 'mainController'
     })
     .when('/buildme', {
-        templateUrl: 'pages/build.html',
+        templateUrl: 'pages/currentDeck.html',
         controller: 'buildController'
     })
     .when('/decks', {
-        templateUrl: 'pages/decks.html'
+        templateUrl: 'pages/deckGallery.html'
     })
 });
 
@@ -45,12 +45,10 @@ hstone.config(function ($routeProvider, $locationProvider) {
 hstone.controller("buildController", ['$scope', '$log', function($scope, $log) {
     $scope.scopeName = "Build";
     
-    console.log($scope);
-    
 }]);
 
 // Main Controller
-hstone.controller('mainController', ['$scope', '$http', function ($scope, $http) {
+hstone.controller('mainController', ['$scope', '$http', '$location', function ($scope, $http, $location) {
     $scope.scopeName = "Main";
     $scope.formData = {};
     
@@ -62,6 +60,9 @@ hstone.controller('mainController', ['$scope', '$http', function ($scope, $http)
     $scope.nameOfTypes = [];
     $scope.nameOfSets = [];
     
+    $scope.decks = [];
+    
+    
     // Array of cards currently loaded
 //    $scope.cardsOnDisplay = [];
     
@@ -72,6 +73,7 @@ hstone.controller('mainController', ['$scope', '$http', function ($scope, $http)
         function onError(res) {
            console.log('Error: ' + res.data);
         }
+        
     );
     
     $scope.searchCard = () => {
@@ -80,8 +82,10 @@ hstone.controller('mainController', ['$scope', '$http', function ($scope, $http)
     
     $scope.createDeck = () => {
         console.log("Deck Builder");
-        window.gCardDeck = new Deck($scope.formData.deckName, $scope.formData.playerClass);
-        $scope.cardDeck = window.gCardDeck;
+        window.gactiveDeck = new Deck($scope.formData.deckName, $scope.formData.playerClass);
+        
+        $scope.activeDeck = window.gactiveDeck;
+        $scope.decks.push($scope.activeDeck);
         
         // Close Modal
         window.gDeckModal.close();
@@ -162,7 +166,10 @@ hstone.controller('mainController', ['$scope', '$http', function ($scope, $http)
                 break;
             default:
                 console.log("ERROR! Invalid search type given");
-        } 
+        }
+        
+        // Change view to search so we can see the results
+        $location.path('/');
     };
     
     $scope.setSearchType = (searchType) => {
@@ -203,7 +210,7 @@ hstone.controller('mainController', ['$scope', '$http', function ($scope, $http)
         // Clear Array
         $scope.cardsOnDisplay = [];
         
-        for(var i = 0; i < cardArray.length && $scope.cardsOnDisplay.length <= 8; i++) {
+        for(var i = 0; i < cardArray.length && $scope.cardsOnDisplay.length < 16; i++) {
             if(cardArray[i].img && cardArray[i].text) {
                 $scope.cardsOnDisplay.push(cardArray[i]);
             }
@@ -242,11 +249,16 @@ hstone.controller('mainController', ['$scope', '$http', function ($scope, $http)
         });
     };
     
-    $scope.addToDeck = (card) => {
-//        window.gCardDeck.addCard(res.data[index]);
+    $scope.addToDeck = (index) => {
+//        window.gactiveDeck.addCard(res.data[index]);
+        console.log("Adding card to deck!");
         
-        if(window.gCardDeck != null)
-            window.gCardDeck.addCard($scope.cardsOnDisplay[0]);
+        if($scope.activeDeck)
+            $scope.activeDeck.addCard($scope.cardsOnDisplay[index]);
+    };
+    
+    $scope.setAsActivetDeck = (index) => {
+        $scope.activeDeck = $scope.decks[index];
     };
     
 }]);

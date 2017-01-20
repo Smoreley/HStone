@@ -1,0 +1,12 @@
+.cardStyle {
+/*    transition-duration: 1s;*/
+    transition: all .2s ease-in-out;
+}
+
+.cardStyle:hover {
+    transform: scale(1.1);
+}
+
+.cardStyle:active {
+    transform: scale(1.0);
+}

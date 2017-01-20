@@ -2,15 +2,13 @@
 
 Hearthstone web-app for the community
 
+## API
+[hearthstone API](http://hearthstoneapi.com/)
+
 # Layout
-
-## Main Page
 * Search for cards (name, class, type, cost)
-* Build Deck
-
-## Pages
-* Main Page
-* Deck Builder
+* Active Deck
+* Saved Decks
 
 ---
 
@@ -72,6 +70,6 @@ Set -> cost -> attack -> health -> durability
 
 ## Deck Builder
 * Card Limit (card.count <= 30)
-* Card class check (card.class == player.class)
+* Card Class check (card.class == player.class)
 *
 

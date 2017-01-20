@@ -1,5 +1,6 @@
 <h4>Scope Value: {{ scopeName }}</h4>
 
+<!--
 <div class="infoSet callout">
     <div class="row">
         <div class="large-6 medium-6 columns">
@@ -23,13 +24,14 @@
         </div>
     </div>
 </div>
+-->
 
 <div class="row">
     <div ng-repeat="n in cardsOnDisplay track by $index">
         
-        <div class="small-3 columns">
+        <div class="medium-3 columns">
             {{n.name}}
-            <img class="thumbnail" src={{n.img}}>
+            <img class="cardStyle" src={{n.img}} ng-click="addToDeck($index)">
         </div>
     
     </div>

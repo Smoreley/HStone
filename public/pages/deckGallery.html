@@ -1,0 +1,18 @@
+<h4>Scope Value: {{ scopeName }}</h4>
+
+PAGE FOR ALL THE USERS DECKS
+
+Maybe limit that users can only have up to eight deck saves
+
+<div class="row">
+    <div ng-repeat="n in decks track by $index">
+        
+        <div class="small-3 columns">
+            {{$index}}
+            {{n.name}}
+            {{n.playerClass}}
+            
+            <img class="" src="../imgs/class_Icons/{{n.playerClass}}_icon.png" ng-click="setAsActivetDeck($index)">
+        </div>        
+    </div>
+</div>

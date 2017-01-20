@@ -1,35 +1,35 @@
 <h4>Scope Value: {{ scopeName }}</h4>
 
 
-<div ng-if="cardDeck == null">
+<div ng-if="activeDeck == null">
     <h1>No Deck selected, please select one or create a new one</h1>
 </div>
 
 <div class="row">    
     <div class="small-6 columns">
-        <h2>{{cardDeck.name}}</h2>    
+        <h2>{{activeDeck.name}}</h2>    
     </div>
     <div class="small-6 columns">
-        <h2>{{cardDeck.getClass()}}</h2>    
+        <h2>{{activeDeck.getClass()}}</h2>    
     </div>
 </div>
 
 <div class="row">
     <div class="medium-12 columns">
     <div class="success progress" role="progressbar" tabindex="0" aria-valuemin="0" aria-valuemax="30">
-        <div class="progress-meter" style="width:calc(100% * {{cardDeck.getDeck().length}} / 30)">
-            <p class="progress-meter-text">{{cardDeck.getDeck().length}}/30</p>
+        <div class="progress-meter" style="width:calc(100% * {{activeDeck.getDeck().length}} / 30)">
+            <p class="progress-meter-text">{{activeDeck.getDeck().length}}/30</p>
         </div>
     </div>
 </div>
 
 <div class="row">
-    <div ng-repeat="n in cardDeck.getDeck() track by $index">
+    <div ng-repeat="n in activeDeck.getDeck() track by $index">
         
         <div class="small-3 columns">
             {{n.name}}
             {{$index}}
-            <img class="thumbnail" src={{n.img}} ng-click="cardDeck.removeByIndex($index)">
+            <img class="thumbnail" src={{n.img}} ng-click="activeDeck.removeByIndex($index)">
         </div>        
     </div>
 </div>
