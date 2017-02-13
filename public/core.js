@@ -80,8 +80,13 @@ hstone.controller('mainController', ['$scope', '$http', '$location', function ($
         console.log("Search Button was pressed");
     };
     
-    $scope.createDeck = () => {
-        console.log("Deck Builder");
+    $scope.createDeck = () => {        
+        // Check that form has been filled out if not return error message
+        if($scope.formData.deckName == null || $scope.formData.playerClass == null) {
+            console.log("Could not create deck");
+            return;
+        }
+        
         window.gactiveDeck = new Deck($scope.formData.deckName, $scope.formData.playerClass);
         
         $scope.activeDeck = window.gactiveDeck;
@@ -91,8 +96,10 @@ hstone.controller('mainController', ['$scope', '$http', '$location', function ($
         window.gDeckModal.close();
     };
     
-    $scope.setCurrentDeck = () => {
+    $scope.setCurrentDeck = (deckID) => {
         
+        window.gactiveDeck = $scope.decks[deckID];
+        $scope.activeDeck = window.gactiveDeck;
     };
     
     $scope.findCard = () => {
