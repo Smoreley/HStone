@@ -19,7 +19,8 @@ $(document).ready(function () {
     // Toggle accordion
     $("#accordionLauncher").click(function(e) {
         $("#myAccordion").foundation('toggle',$("#item1"));
-    });  
+    });
+    
 });
 
 // Setup hstone module
@@ -37,7 +38,8 @@ hstone.config(function ($routeProvider, $locationProvider) {
         controller: 'buildController'
     })
     .when('/decks', {
-        templateUrl: 'pages/deckGallery.html'
+        templateUrl: 'pages/deckGallery.html',
+        controller: 'buildController'
     })
 });
 
@@ -45,10 +47,12 @@ hstone.config(function ($routeProvider, $locationProvider) {
 hstone.controller("buildController", ['$scope', '$log', function($scope, $log) {
     $scope.scopeName = "Build";
     
+    // Load Deck
+    $scope.load();
 }]);
 
 // Main Controller
-hstone.controller('mainController', ['$scope', '$http', '$location', function ($scope, $http, $location) {
+hstone.controller('mainController', ['$scope', '$http', '$location', '$cookies', function ($scope, $http, $location, $cookies) {
     $scope.scopeName = "Main";
     $scope.formData = {};
     
@@ -62,7 +66,7 @@ hstone.controller('mainController', ['$scope', '$http', '$location', function ($
     
     $scope.decks = [];
     
-    
+    $scope.activeDeckNumber = 0;
     // Array of cards currently loaded
 //    $scope.cardsOnDisplay = [];
     
@@ -73,7 +77,6 @@ hstone.controller('mainController', ['$scope', '$http', '$location', function ($
         function onError(res) {
            console.log('Error: ' + res.data);
         }
-        
     );
     
     $scope.searchCard = () => {
@@ -92,14 +95,13 @@ hstone.controller('mainController', ['$scope', '$http', '$location', function ($
         $scope.activeDeck = window.gactiveDeck;
         $scope.decks.push($scope.activeDeck);
         
+        $scope.activeDeckNumber = $scope.decks.length-1;
+        console.log("THE DECK LENGHT IS "+$scope.decks.length);
+        
         // Close Modal
         window.gDeckModal.close();
-    };
-    
-    $scope.setCurrentDeck = (deckID) => {
         
-        window.gactiveDeck = $scope.decks[deckID];
-        $scope.activeDeck = window.gactiveDeck;
+        $scope.save();
     };
     
     $scope.findCard = () => {
@@ -258,14 +260,56 @@ hstone.controller('mainController', ['$scope', '$http', '$location', function ($
     
     $scope.addToDeck = (index) => {
 //        window.gactiveDeck.addCard(res.data[index]);
-        console.log("Adding card to deck!");
         
         if($scope.activeDeck)
-            $scope.activeDeck.addCard($scope.cardsOnDisplay[index]);
+            $scope.decks[$scope.activeDeckNumber].addCard($scope.cardsOnDisplay[index]);
+//            $scope.activeDeck.addCard($scope.cardsOnDisplay[index]);
+        
+        console.log("Adding card to deck!");
+        $scope.save();
     };
     
     $scope.setAsActivetDeck = (index) => {
-        $scope.activeDeck = $scope.decks[index];
+//        $scope.activeDeck = $scope.decks[index];
+        $scope.activeDeckNumber = index;
+        
+        console.log("I WAS CALLED "+index);
+        console.log($scope.decks[index]);
+        $scope.save();
     };
     
+    // Save deck data to local storage
+    $scope.save = () => {      
+        
+        // Local Storage
+//        window.localStorage.setItem("DeckName", $scope.activeDeck.name);
+//        window.localStorage.setItem("DeckClass", $scope.activeDeck.getClass());
+//        window.localStorage.setItem("Deck", JSON.stringify($scope.activeDeck.deck));
+        
+        window.localStorage.setItem("Decks", JSON.stringify($scope.decks));
+        window.localStorage.setItem("LastActiveDeck", $scope.activeDeckNumber.toString());
+                                    
+        console.log("SAVING");
+    }
+    
+    // Load deck data from local storage
+    $scope.load = () => {        
+//        $scope.activeDeck = new Deck(window.localStorage.getItem("DeckName"), window.localStorage.getItem("DeckClass"));
+//        $scope.activeDeck.deck = JSON.parse(window.localStorage.getItem("Deck"));
+        
+        $scope.decks = JSON.parse(window.localStorage.getItem("Decks"));
+        
+        for(var i = 0; i < $scope.decks.length; i++) {
+            var temp = new Deck($scope.decks[i].name, $scope.decks[i].playerClass);
+            temp.deck = $scope.decks[i].deck;
+            $scope.decks[i] = temp;
+            console.log("DOING IT");
+        }
+        
+        $scope.activeDeckNumber = parseInt(window.localStorage.getItem("LastActiveDeck"));
+        $scope.setAsActivetDeck($scope.activeDeckNumber);
+    }
+    
+    
+    $scope.load();
 }]);

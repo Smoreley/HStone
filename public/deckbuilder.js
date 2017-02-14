@@ -18,8 +18,12 @@ class Deck {
     addCard(cardInfo) {
         // Block adding more then 99 cards to deck
         // or if card class doesn't match this deck and it is not Neutral
-        if(this.deck.length >= 99 || cardInfo.playerClass != this.playerClass && cardInfo.playerClass != "Neutral") { return;}
+        if(this.deck.length >= 99 || cardInfo.playerClass != this.playerClass && cardInfo.playerClass != "Neutral")
+        {
+            return;
+        }
         
+        // put the card in the right location (splice it into the middle if the cost is < or > then others)
         for(var i=0; i < this.deck.length; i++) {            
             if(cardInfo.cost > this.deck[i].cost) {
                 continue;
@@ -30,6 +34,7 @@ class Deck {
         }
         
         this.deck.push(cardInfo);
+//        return true;
     }
     
     // Removes card by info
