@@ -6,13 +6,9 @@ class Deck {
         this.deck = [];
     }
     
-    getDeck() {
-        return this.deck;
-    }
+    getDeck() { return this.deck; }
     
-    getClass() {
-        return this.playerClass;
-    }
+    getClass() { return this.playerClass; }
     
     // Add card to deck (sorts them by cost)
     addCard(cardInfo) {
@@ -20,7 +16,7 @@ class Deck {
         // or if card class doesn't match this deck and it is not Neutral
         if(this.deck.length >= 99 || cardInfo.playerClass != this.playerClass && cardInfo.playerClass != "Neutral")
         {
-            return;
+            return false;
         }
         
         // put the card in the right location (splice it into the middle if the cost is < or > then others)
@@ -29,12 +25,12 @@ class Deck {
                 continue;
             } else {
                 this.deck.splice(i, 0, cardInfo);
-                return;
+                return true;
             }
         }
         
         this.deck.push(cardInfo);
-//        return true;
+        return true;
     }
     
     // Removes card by info
@@ -43,9 +39,10 @@ class Deck {
         for(var i=0; i < this.deck.length; i++) {
             if(cardInfo.cardId === this.deck[i].cardId ) {
                 this.deck.splice(i,1);
-                return;
+                return true;
             }
         }
+        return false;
     }
     
     // Removes card given by index
@@ -57,5 +54,4 @@ class Deck {
     test() {
         console.log("This is a deck test");
     }
-    
 }

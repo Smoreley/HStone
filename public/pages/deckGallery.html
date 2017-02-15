@@ -2,7 +2,7 @@
 
 PAGE FOR ALL THE USERS DECKS
 
-Maybe limit that users can only have up to eight deck saves
+<a class="button" ng-click="clearDeck()">Clear</a>
 
 <div class="row">
     <div ng-repeat="n in decks track by $index">
@@ -12,7 +12,7 @@ Maybe limit that users can only have up to eight deck saves
             {{n.name}}
             {{n.playerClass}}
             
-            <img class="" src="../imgs/class_Icons/{{n.playerClass}}_icon.png" ng-click="setAsActivetDeck($index)">
+            <a href='#!/buildme'><img class="" src="../imgs/class_Icons/{{n.playerClass}}_icon.png" ng-click="setActivetDeck($index)"></a>
         </div>        
     </div>
 </div>

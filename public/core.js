@@ -30,6 +30,10 @@ hstone.config(function ($routeProvider, $locationProvider) {
 //    $locationProvider.hashPrefix('');
     $routeProvider
     .when('/', {
+        templateUrl: 'pages/main.html',
+        controller: 'mainController'
+    })
+    .when('/search', {
         templateUrl: 'pages/cardSearch.html',
         controller: 'mainController'
     })
@@ -53,7 +57,7 @@ hstone.controller("buildController", ['$scope', '$log', function($scope, $log) {
 
 // Main Controller
 hstone.controller('mainController', ['$scope', '$http', '$location', '$cookies', function ($scope, $http, $location, $cookies) {
-    $scope.scopeName = "Main";
+    // Formdata that user fills out
     $scope.formData = {};
     
     // Method to search a card by
@@ -65,10 +69,7 @@ hstone.controller('mainController', ['$scope', '$http', '$location', '$cookies',
     $scope.nameOfSets = [];
     
     $scope.decks = [];
-    
     $scope.activeDeckNumber = 0;
-    // Array of cards currently loaded
-//    $scope.cardsOnDisplay = [];
     
     $http.get('/').then(
         function onSuccess(res) {        
@@ -79,29 +80,31 @@ hstone.controller('mainController', ['$scope', '$http', '$location', '$cookies',
         }
     );
     
-    $scope.searchCard = () => {
-        console.log("Search Button was pressed");
-    };
-    
-    $scope.createDeck = () => {        
+    $scope.createDeck = () => {
+        if($scope.decks.length >= 8) {
+            console.log("To Many Decks saved, delete one first.");
+        }
+        
         // Check that form has been filled out if not return error message
         if($scope.formData.deckName == null || $scope.formData.playerClass == null) {
             console.log("Could not create deck");
-            return;
+            return false;
         }
         
         window.gactiveDeck = new Deck($scope.formData.deckName, $scope.formData.playerClass);
-        
-        $scope.activeDeck = window.gactiveDeck;
-        $scope.decks.push($scope.activeDeck);
-        
+        $scope.decks.push(window.gactiveDeck);
         $scope.activeDeckNumber = $scope.decks.length-1;
-        console.log("THE DECK LENGHT IS "+$scope.decks.length);
         
         // Close Modal
         window.gDeckModal.close();
         
         $scope.save();
+        return true;
+    };
+    
+    $scope.failedCardFind = () => {
+        console.log("could not find card");
+        
     };
     
     $scope.findCard = () => {
@@ -119,7 +122,7 @@ hstone.controller('mainController', ['$scope', '$http', '$location', '$cookies',
         //            console.log(JSON.stringify(res.data) );
         //            $scope.helloTo.title = res.data;
 
-                    if(res.data.length == undefined) { console.log("no Cards"); }
+                    if(res.data.length == undefined) { $scope.failedCardFind(); }
 
                     $scope.cardProccess(res.data);
                     $scope.displayCard($scope.cardsOnDisplay[0]);
@@ -134,7 +137,7 @@ hstone.controller('mainController', ['$scope', '$http', '$location', '$cookies',
                 // Sending post request to find card by Class
                 $http.post('/findCardByClass', $scope.formData).then(
                 function onSuccess(res) {
-                    if(res.data.length == undefined) { console.log("no Cards"); }
+                    if(res.data.length == undefined) { $scope.failedCardFind(); }
                     
                     $scope.cardProccess(res.data);
                     $scope.displayCard($scope.cardsOnDisplay[0]);
@@ -149,7 +152,7 @@ hstone.controller('mainController', ['$scope', '$http', '$location', '$cookies',
                 // Sending post request to find card by TYpe
                 $http.post('/findCardByType', $scope.formData).then(
                 function onSuccess(res) {
-                    if(res.data.length == undefined) { console.log("no Cards"); }
+                    if(res.data.length == undefined) { $scope.failedCardFind(); }
                     
                     $scope.cardProccess(res.data);
                     $scope.displayCard($scope.cardsOnDisplay[0]);
@@ -164,7 +167,7 @@ hstone.controller('mainController', ['$scope', '$http', '$location', '$cookies',
                 // Sending post request to find card by TYpe
                 $http.post('/findCardBySet', $scope.formData).then(
                 function onSuccess(res) {
-                    if(res.data.length == undefined) { console.log("no Cards"); }
+                    if(res.data.length == undefined) { $scope.failedCardFind(); }
                     
                     $scope.cardProccess(res.data);
                     $scope.displayCard($scope.cardsOnDisplay[0]);
@@ -178,7 +181,7 @@ hstone.controller('mainController', ['$scope', '$http', '$location', '$cookies',
         }
         
         // Change view to search so we can see the results
-        $location.path('/');
+        $location.path('/search');
     };
     
     $scope.setSearchType = (searchType) => {
@@ -224,9 +227,8 @@ hstone.controller('mainController', ['$scope', '$http', '$location', '$cookies',
                 $scope.cardsOnDisplay.push(cardArray[i]);
             }
         }
-        
         console.log($scope.cardsOnDisplay);
-    }
+    };
     
     // Display card data
     $scope.displayCard = (data) => {
@@ -258,58 +260,53 @@ hstone.controller('mainController', ['$scope', '$http', '$location', '$cookies',
         });
     };
     
-    $scope.addToDeck = (index) => {
-//        window.gactiveDeck.addCard(res.data[index]);
-        
-        if($scope.activeDeck)
+    $scope.addToDeck = (index) => {        
+        if($scope.getActiveDeck())
             $scope.decks[$scope.activeDeckNumber].addCard($scope.cardsOnDisplay[index]);
-//            $scope.activeDeck.addCard($scope.cardsOnDisplay[index]);
         
-        console.log("Adding card to deck!");
         $scope.save();
     };
     
-    $scope.setAsActivetDeck = (index) => {
-//        $scope.activeDeck = $scope.decks[index];
+    $scope.setActivetDeck = (index) => {
         $scope.activeDeckNumber = index;
-        
-        console.log("I WAS CALLED "+index);
-        console.log($scope.decks[index]);
         $scope.save();
+    };
+    
+    $scope.getActiveDeck = () => {
+        if($scope.activeDeckNumber >= 0) {
+            return $scope.decks[$scope.activeDeckNumber];
+        }
+        return null;
     };
     
     // Save deck data to local storage
     $scope.save = () => {      
-        
-        // Local Storage
-//        window.localStorage.setItem("DeckName", $scope.activeDeck.name);
-//        window.localStorage.setItem("DeckClass", $scope.activeDeck.getClass());
-//        window.localStorage.setItem("Deck", JSON.stringify($scope.activeDeck.deck));
-        
+        // Local Storage        
         window.localStorage.setItem("Decks", JSON.stringify($scope.decks));
         window.localStorage.setItem("LastActiveDeck", $scope.activeDeckNumber.toString());
-                                    
-        console.log("SAVING");
-    }
+    };
     
     // Load deck data from local storage
-    $scope.load = () => {        
-//        $scope.activeDeck = new Deck(window.localStorage.getItem("DeckName"), window.localStorage.getItem("DeckClass"));
-//        $scope.activeDeck.deck = JSON.parse(window.localStorage.getItem("Deck"));
-        
+    $scope.load = () => {
         $scope.decks = JSON.parse(window.localStorage.getItem("Decks"));
         
+        // Creates Deck Objects
         for(var i = 0; i < $scope.decks.length; i++) {
             var temp = new Deck($scope.decks[i].name, $scope.decks[i].playerClass);
             temp.deck = $scope.decks[i].deck;
             $scope.decks[i] = temp;
-            console.log("DOING IT");
         }
         
         $scope.activeDeckNumber = parseInt(window.localStorage.getItem("LastActiveDeck"));
-        $scope.setAsActivetDeck($scope.activeDeckNumber);
-    }
+        $scope.setActivetDeck($scope.activeDeckNumber);
+    };
     
+    // Clear Decks
+    $scope.clearDeck = () => {        
+        $scope.decks = [];
+        $scope.activeDeckNumber = -0;
+        $scope.save();
+    };
     
     $scope.load();
 }]);
