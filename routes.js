@@ -5,7 +5,7 @@ module.exports = function(app) {
     
     // Root page/Homepage
     app.get('/', function(req,res) {
-        res.render('index', {title:"Homepage"});
+        res.render('index', {title:"HStone"});
     });
     
     // About Page

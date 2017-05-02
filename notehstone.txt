@@ -1,0 +1,26 @@
+Deck Builder
+Deck comparision (shows simularities and differences also comparses the number of minion card ratio and magic card ratio)
+
+Card Comparision (straight up card comparision, Might lock it to only allow minion to minion comparison (cards must be the same type)
+
+Goal Get class icon
+
+
+add card to deck
+remove card from deck
+
+Todo!
+* search for card img wheel
+x deck cookie saving
+* Creating Deck and Deleting Deck
+* random roll (randomly pick card or create a deck randomly)
+* Mana Curve
+* Duplicate card limit (max:2 of same card in a deck)
+* Ability to change Deck Name
+* Auto update search when use enters new info (ditch search button)
+* Click on text to change name (change deck names)
+
+Card(effect) DeckList(Display created deck)
+
+
+Grid navigation, you use arrow keys to navigate a gird of menues which take you to different pages.

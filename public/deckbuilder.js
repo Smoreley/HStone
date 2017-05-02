@@ -25,6 +25,7 @@ class Deck {
                 continue;
             } else {
                 this.deck.splice(i, 0, cardInfo);
+                
                 return true;
             }
         }
@@ -49,6 +50,28 @@ class Deck {
     removeByIndex(index) {
         // Remove it from array
         this.deck.splice(index, 1);
+    }
+    
+    getAttackTotal() {
+        // Tally up some total card stats
+        var attackTotal = 0;
+        
+        for(var i=0; i < this.deck.length; i++) {
+            if(this.deck[i].attack) {
+                attackTotal += this.deck[i].attack;
+            }
+        }
+        return attackTotal;
+    }
+    
+    getManaTotal() {
+        var manaTotal = 0;
+        for(var i=0; i < this.deck.length; i++) {
+            if(this.deck[i].cost) {
+                manaTotal += this.deck[i].cost;
+            }
+        }
+        return manaTotal;
     }
     
     test() {

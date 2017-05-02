@@ -45,6 +45,10 @@ hstone.config(function ($routeProvider, $locationProvider) {
         templateUrl: 'pages/deckGallery.html',
         controller: 'buildController'
     })
+    .when('/about', {
+        templateUrl: 'pages/about.html',
+        controller: 'mainController'
+    })
 });
 
 // Deck Builder controller
@@ -260,9 +264,18 @@ hstone.controller('mainController', ['$scope', '$http', '$location', '$cookies',
         });
     };
     
+    // Adds card to currently active deck
     $scope.addToDeck = (index) => {        
         if($scope.getActiveDeck())
             $scope.decks[$scope.activeDeckNumber].addCard($scope.cardsOnDisplay[index]);
+        
+        $scope.save();
+    };
+    
+    // Removes card from deck
+    $scope.removeFromDeck = (index) => {
+        if($scope.getActiveDeck())
+            $scope.decks[$scope.activeDeckNumber].removeByIndex(index);
         
         $scope.save();
     };

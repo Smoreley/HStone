@@ -1,6 +1,7 @@
 # HStone
 
 Hearthstone web-app for the community
+Built on Node.js, uses AngularJS.
 
 ## API
 [hearthstone API](http://hearthstoneapi.com/)
@@ -13,14 +14,13 @@ Hearthstone web-app for the community
 ---
 
 # Parameters
-
 ## Search Type
 * Name
 * Class
 * Set
 * Type
 
-## Card Types
+## Card Sets
 * Basic
 * Classic
 * Promo
@@ -43,7 +43,7 @@ Hearthstone web-app for the community
 * Spell
 * Weapon
 
-## Player Class
+## Player Classes
 * Druid
 * Hunter
 * Mage
@@ -56,20 +56,21 @@ Hearthstone web-app for the community
 
 ### Search Outline
 
-## Name
+#### Name
 Name
 
-## Class
+#### Class
 Class -> cost -> attack -> health -> durability
 
-## Type
+#### Type
 Type -> cost -> attack -> health -> durability
 
-## Set
+#### Set
 Set -> cost -> attack -> health -> durability
 
 ## Deck Builder
 * Card Limit (card.count <= 30)
 * Card Class check (card.class == player.class)
-*
 
+
+![user deck](screenshots/player_deck.png)
