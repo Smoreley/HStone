@@ -1,6 +1,6 @@
 # HStone
 
-Hearthstone web-app for the community
+Hearthstone web-app for the community.
 Built on Node.js, uses AngularJS.
 
 ## API
@@ -13,7 +13,7 @@ Built on Node.js, uses AngularJS.
 
 ---
 
-# Parameters
+# Card Parameters
 ## Search Type
 * Name
 * Class
