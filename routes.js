@@ -1,3 +1,5 @@
+var page_tile = "HStone";
+
 module.exports = function(app) {
     // Unirest API needed to pull hearthstone data
     var unirest = require('unirest');
@@ -5,12 +7,12 @@ module.exports = function(app) {
     
     // Root page/Homepage
     app.get('/', function(req,res) {
-        res.render('index', {title:"HStone"});
+        res.render('index', {title:page_tile});
     });
     
     // About Page
     app.get('/about', function(req,res) {
-        res.render('about',{title:"About"});
+        res.render('about',{title:page_tile + " - About"});
     });
     
     app.get("/find", function(req, res) {
@@ -43,7 +45,7 @@ module.exports = function(app) {
     
     // Unfound Page
     app.get('/404', function(req,res) {
-        res.render('404',{title:"404"});
+        res.render('404',{title:page_tile + " - 404"});
     });
     
     // Get info
