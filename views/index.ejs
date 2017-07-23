@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html ng-app="hstone" class="no-js">
+<html ng-app="hstone" class="no-js" lang="en">
     <head>
         <% include partials/header.ejs %>
     </head>
@@ -10,7 +10,9 @@
         
         <% include partials/nav.ejs %>
         
-        <div ng-view></div>
+        <div id="body-content">
+            <div ng-view></div>
+        </div>
         
         <% include partials/footer.ejs %>
         

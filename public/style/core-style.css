@@ -29,11 +29,11 @@ label {
 }
 
 .top-bar {
-    background-color: #424242;
+/*    background-color: #424242;*/
 }
 
 .menu > li{
-    background-color: #424242;
+/*    background-color: #424242;*/
 }
 
 ul {
@@ -42,21 +42,21 @@ ul {
 
 body {
 /*    background:linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.)), url(imgs/class_background/warrior_bg.jpg);*/
-    background-color: #f1f1f1;
-    background-image: url(../imgs/background.jpg);
-    background-size: 100vw;
-    background-repeat: no-repeat;
-    background-position: 50% 0%;
+
 }
 
 footer {
-    background: #A1A1A1;
+/*    background: rgba(0,0,0,0.75);*/
+    background-color: black;
+    color: #f1f1f1;
 }
 
-footer:hover {
-    background: white;
-}
-
-.row {
-    background: #f1f1f1;
+#body-content {
+    background-color: #f1f1f1;
+    background-image: url(../imgs/background.jpg);
+    background-attachment: fixed;
+    background-size: cover;
+    background-repeat: no-repeat;
+/*    background-position: 50% 0%;*/
+    background-position: center;
 }
